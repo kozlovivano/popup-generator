@@ -1082,6 +1082,7 @@
             }else{
                 $("." + $(this).attr('name').split("-")[0] + "-div").hide(300);
                 $("." + $(this).attr('name').split("-")[0] + "-div").find("input").val("");
+                $("." + $(this).attr('name').split("-")[0] + "-div").find("input").trigger('change');
             }
         })
         /*   -Switch button control end-   */
