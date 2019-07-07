@@ -1,19 +1,17 @@
+
 <!DOCTYPE html>
 <!--  Last Published: Tue Jun 18 2019 12:36:49 GMT+0000 (UTC)  -->
 <html data-wf-page="5d0752128518927d140033ab" data-wf-site="5b27ad71f471c80738d206f5">
 
 <head>
     <meta charset="utf-8">
-    <title>Popup-1</title>
+    <title>Popup-2</title>
     <meta content="wizard-2" property="og:title">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <link href="../../css/normalize.css" rel="stylesheet" type="text/css">
     <link href="../../css/components.css" rel="stylesheet" type="text/css">
     <link href="../../css/twik-v3.css" rel="stylesheet" type="text/css">
     <link href="../../css/slick.css" rel="stylesheet" type="text/css">
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
-        <script src="https://use.typekit.net/dbi5cdt.js" type="text/javascript"></script>
-    </script>
     <script type="text/javascript">
         try {
             Typekit.load();
@@ -28,535 +26,6 @@
     </script>
     <link href="../../images/smallfav.png" rel="shortcut icon" type="image/x-icon">
     <link href="../../images/favicon.png" rel="apple-touch-icon">
-    <style>
-        body {
-            text-rendering: optimizeLegibility;
-            -webkit-font-smoothing: antialiased;
-
-            color: #333;
-            font-size: 14px;
-            line-height: 20px;
-        }
-        p {
-            margin-bottom: 0px;
-        }
-        .stickydiv {
-            position: sticky;
-            top: 98px;
-        }
-        
-        @media (max-width: 479px) {
-            .maincontentallwidth {
-                max-width: calc(100% + 36px) !important;
-                min-width: calc(100% + 36px) !important;
-            }
-            .introheader {
-                min-height: max-content;
-            }
-        }
-        
-        @media (max-width: 991px) {
-            .halfcolimg {
-                width: calc(100% + 64px);
-            }
-        }
-        
-        @media (max-width: 479px) {
-            .halfcolimg {
-                width: calc(100% + 34px);
-            }
-        }
-        
-        img.image-59 {
-            object-fit: cover;
-        }
-        
-        .w-slider-mask {
-            height: max-content !important;
-        }
-        
-        .w-slider {
-            height: max-content !important;
-        }
-
-        .switch {
-            position: relative;
-        }
-        .switch input {
-            position: absolute;
-            top: 0;
-            z-index: 2;
-            opacity: 0;
-            cursor: pointer;
-        }
-        .switch input:checked {
-            z-index: 1;
-        }
-        .switch input:checked + label {
-            opacity: 1;
-            cursor: default;
-        }
-        .switch input:not(:checked) + label:hover {
-            opacity: 0.5;
-        }
-        .switch label {
-            color: #fff;
-            opacity: 0.33;
-            transition: opacity 0.25s ease;
-            cursor: pointer;
-        }
-        .switch .toggle-outside {
-            height: 24px;
-            border-radius: 24px;
-            padding: 3px;
-            overflow: hidden;
-            transition: 0.25s ease all;
-        }
-        .switch .toggle-inside {
-            border-radius: 5rem;
-            background: #4a4a4a;
-            position: absolute;
-            transition: 0.25s ease all;
-        }
-        .switch--horizontal {
-            width: 48px;
-            float: right;
-            height: 24px;
-            font-size: 0;
-        }
-        .switch--horizontal input {
-            height: 24px;
-            width: 48px;
-            right: 0px;
-            margin: 0;
-        }
-        .switch--horizontal label {
-            font-size: 1.5rem;
-            line-height: 3rem;
-            display: inline-block;
-            width: 6rem;
-            height: 100%;
-            margin: 0;
-            text-align: center;
-        }
-        .switch--horizontal label:last-of-type {
-            margin-left: 6rem;
-        }
-        .switch--horizontal .toggle-outside {
-            background: #b2b2b3;
-            position: absolute;
-            width: 48px;
-            right: 0px;
-        }
-        .switch--horizontal .toggle-inside {
-            height: 18px;
-            width: 18px;
-            background: white;
-        }
-        .switch--horizontal input:checked ~ .toggle-outside .toggle-inside {
-            left: 3px;
-        }
-        .switch--horizontal input ~ input:checked ~ .toggle-outside{
-            background: #2b8970;
-        }
-        .switch--horizontal input ~ input:checked ~ .toggle-outside .toggle-inside {
-            left: 27px;
-        }
-/*Popup style*/
-        .relativepopup{
-            position: relative;
-        }
-        .overlay-popup{
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 99999999;
-        }
-        .popup-container {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -ms-flexbox;
-            display: flex;
-            overflow: hidden;
-            -webkit-box-pack: center;
-            -webkit-justify-content: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-            -webkit-box-align: stretch;
-            -webkit-align-items: stretch;
-            -ms-flex-align: stretch;
-            align-items: stretch;
-            border-radius: 2px;
-            background-color: #fff;
-            box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.24), 0 30px 70px 0 rgba(0, 0, 0, 0.24);
-            font-size: 16px;
-            line-height: 24px;
-        }
-        .popup-container.image-left {
-            -webkit-box-orient: horizontal;
-            -webkit-box-direction: reverse;
-            -webkit-flex-direction: row-reverse;
-            -ms-flex-direction: row-reverse;
-            flex-direction: row-reverse;
-        }
-        .popup-container.has-background-image {
-            background-color: #e30103;
-        }
-        .popup-container.image-on-top {
-            -webkit-box-orient: vertical;
-            -webkit-box-direction: reverse;
-            -webkit-flex-direction: column-reverse;
-            -ms-flex-direction: column-reverse;
-            flex-direction: column-reverse;
-        }
-        .popup-half-column {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -ms-flexbox;
-            display: flex;
-            max-width: 390px;
-            min-width: 390px;
-            padding: 24px 24px 0px;
-            -webkit-box-orient: vertical;
-            -webkit-box-direction: normal;
-            -webkit-flex-direction: column;
-            -ms-flex-direction: column;
-            flex-direction: column;
-            -webkit-box-pack: center;
-            -webkit-justify-content: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-            -webkit-box-align: center;
-            -webkit-align-items: center;
-            -ms-flex-align: center;
-            align-items: center;
-            text-align: center;
-        }
-        .popup-half-column.popup-image-full {
-            padding: 0px;
-        }
-        .popup-half-column.text-align-left {
-            -webkit-box-align: start;
-            -webkit-align-items: flex-start;
-            -ms-flex-align: start;
-            align-items: flex-start;
-            text-align: left;
-        }
-        .popup-half-column.multiple-products {
-            max-width: 620px;
-            min-width: 620px;
-        }
-        .popup-half-column.single-product {
-            max-width: 360px;
-            min-width: 360px;
-            padding: 0px;
-            -webkit-box-align: start;
-            -webkit-align-items: flex-start;
-            -ms-flex-align: start;
-            align-items: flex-start;
-            text-align: left;
-        }
-        .popup-title {
-            margin-bottom: 12px;
-            color: #282828;
-            font-size: 34px;
-            line-height: 44px;
-            font-weight: 700;
-            letter-spacing: -0.2px;
-        }
-        .popup-title.smaller-title {
-            font-size: 28px;
-            line-height: 36px;
-        }
-        .popup-title.bigger-title {
-            font-size: 42px;
-            line-height: 50px;
-            letter-spacing: -0.4px;
-        }
-        .popup-image-full {
-            width: 100%;
-        }
-        .popup-image-full.popup-image-contain {
-            width: auto;
-            height: auto;
-            margin-top: 0px;
-            margin-right: 0px;
-            margin-left: 0px;
-        }
-        .popup-half-column.popup-image-full img{
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .popup-description {
-            margin-bottom: 24px;
-            color: #686868;
-        }
-        .popup-description.popup-white-color-text {
-            color: #fff;
-        }
-        .popup-subtitle {
-            margin-bottom: 12px;
-            color: #3369e7;
-            font-size: 14px;
-            line-height: 22px;
-            font-weight: 400;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .popup-field {
-            height: 48px;
-            padding-left: 0px;
-            border-style: none none solid;
-            border-width: 1px;
-            border-color: #000 #000 rgba(0, 0, 0, 0.21);
-            border-radius: 2px;
-        }
-        .popup-field::-webkit-input-placeholder {
-            color: #686868;
-        }
-
-        .popup-field:-ms-input-placeholder {
-            color: #686868;
-        }
-
-        .popup-field::-ms-input-placeholder {
-            color: #686868;
-        }
-
-        .popup-field::placeholder {
-            color: #686868;
-        }
-
-        .popup-field.field-50 {
-            width: 46.5%;
-        }
-        .popup-field.field-style-2 {
-            padding-right: 12px;
-            padding-left: 12px;
-            border-style: none;
-            border-color: #000;
-            background-color: #f1f1f1;
-        }
-        .popup-button1 {
-            border: none;width: 100%;
-            margin-top: 8px;
-            margin-bottom: 24px;
-            padding: 15px 24px 16px;
-            border-radius: 2px;
-            background-color: #3369e7;
-            text-align: center;
-        }
-
-        .popup-button1.submit-style-2 {
-            border-radius: 100px;
-        }
-
-        .popup-button1.customize-color {
-            background-color: rgba(0, 0, 0, 0.48);
-        }
-
-        .popup-button1.submit-style-3 {
-            box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.36);
-        }
-
-        .form {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-pack: justify;
-            -webkit-justify-content: space-between;
-            -ms-flex-pack: justify;
-            justify-content: space-between;
-            -webkit-flex-wrap: wrap;
-            -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
-            -webkit-box-align: start;
-            -webkit-align-items: flex-start;
-            -ms-flex-align: start;
-            align-items: flex-start;
-        }
-
-        .popup-bar-container {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -ms-flexbox;
-            display: flex;
-            width: 100vw;
-            padding: 18px 15px;
-            -webkit-box-pack: center;
-            -webkit-justify-content: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-            -webkit-box-align: center;
-            -webkit-align-items: center;
-            -ms-flex-align: center;
-            align-items: center;
-            background-color: #fff;
-            box-shadow: 0 -2px 8px 0 rgba(0, 0, 0, 0.18);
-            font-size: 16px;
-            line-height: 24px;
-        }
-
-        .popup-bar-container.font-lato {
-            position: absolute;
-            left: 0%;
-            top: auto;
-            right: 0%;
-            bottom: 0%;
-            font-family: Lato, sans-serif;
-        }
-
-        .popup-form-block {
-            width: 100%;
-            margin-bottom: 0px;
-        }
-
-        .subtitle-image {
-            max-height: 124px;
-            margin-bottom: 18px;
-        }
-
-        .custom-color {
-            color: #fff;
-        }
-
-        .popup-products {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -ms-flexbox;
-            display: flex;
-            width: 100%;
-            margin-right: -8px;
-            margin-bottom: 24px;
-            margin-left: -8px;
-            -webkit-box-pack: center;
-            -webkit-justify-content: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-            -webkit-box-align: start;
-            -webkit-align-items: flex-start;
-            -ms-flex-align: start;
-            align-items: flex-start;
-        }
-
-        .popup-product {
-            padding: 18px 0px 8px;
-            -webkit-box-align: center;
-            -webkit-align-items: center;
-            -ms-flex-align: center;
-            align-items: center;
-            -webkit-box-flex: 1;
-            -webkit-flex: 1;
-            -ms-flex: 1;
-            flex: 1;
-            -webkit-transition: all 200ms ease;
-            transition: all 200ms ease;
-            text-decoration: none;
-        }
-
-        .popup-product:hover {
-            box-shadow: 0 5px 25px 0 rgba(0, 0, 0, 0.2);
-        }
-
-        .popup-product-name {
-            margin-bottom: 4px;
-            color: #282828;
-            font-size: 18px;
-            line-height: 24px;
-            font-weight: 700;
-        }
-
-        .popup-product-price {
-            color: #686868;
-        }
-
-        .popup-product-price.new-price {
-            color: #3369e7;
-            font-size: 22px;
-            line-height: 28px;
-        }
-
-        .popup-product-price.old-price {
-            margin-bottom: 4px;
-            text-decoration: line-through;
-        }
-
-        .popup-product-image {
-            max-height: 180px;
-            margin-bottom: 18px;
-            border-radius: 0px;
-        }
-
-        .popup-countdown {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -ms-flexbox;
-            display: flex;
-            margin-top: 18px;
-            margin-bottom: 18px;
-            -webkit-box-pack: justify;
-            -webkit-justify-content: space-between;
-            -ms-flex-pack: justify;
-            justify-content: space-between;
-            -webkit-box-align: center;
-            -webkit-align-items: center;
-            -ms-flex-align: center;
-            align-items: center;
-            line-height: 26px;
-        }
-
-        .popup-countdown-number {
-            margin-bottom: 4px;
-            color: #fff;
-            font-size: 64px;
-            line-height: 72px;
-            font-weight: 400;
-            letter-spacing: -1px;
-        }
-
-        .popup-countdown-box {
-            margin-right: 8px;
-            margin-left: 8px;
-            padding: 12px;
-            border-radius: 4px;
-            background-color: #2b2b2b;
-            color: #fff;
-            text-align: center;
-        }
-
-        .popup-discount {
-            margin-bottom: 24px;
-        }
-
-        .popup-discount-text {
-            margin-bottom: 0px;
-            color: #686868;
-        }
-
-        .popup-discount-code {
-            padding: 8px 24px;
-            border: 1px dashed #000;
-            background-color: #f0f0f0;
-            color: #3369e7;
-            font-size: 36px;
-            line-height: 48px;
-            font-weight: 700;
-        }
-
-        .lighter-headlines {
-            font-weight: 400;
-        }
-
-        .popup-countdown-inbetween {
-            margin-top: -48px;
-            font-size: 56px;
-            line-height: 56px;
-        }
-    </style>
     <script>
         if ((new RegExp('^(www\\.)?twik-v3\\.webflow\\.io')).test(location.host)) {
             if (!document.body) {
@@ -625,9 +94,9 @@
                                         <span class="toggle-outside"><span class="toggle-inside"></span></span>
                                     </div>
                                     <div class="subtitle-div">
-                                        <input type="text" class="text-field-4 marginbottom12 w-input" placeholder="Subtitle text" id="subtitle-text" value="Example of text">
+                                        <input type="text" class="text-field-4 marginbottom12 w-input" placeholder="Subtitle text" id="subtitle-text">
                                         <label class="nomarginbottom">Subtitle color</label>
-                                        <input type="text" class="text-field-4 marginbottom12 w-input jscolor" placeholder="Subtitle color" id="subtitle-color" value="#3369e7">
+                                        <input type="text" class="text-field-4 marginbottom12 w-input jscolor" placeholder="Subtitle color" id="subtitle-color">
                                     </div>
                                 </div>
                                 <div class="marginbottom24 w30tab w-clearfix">
@@ -638,9 +107,9 @@
                                         <span class="toggle-outside"><span class="toggle-inside"></span></span>
                                     </div>
                                     <div class="title-div">
-                                        <input type="text" class="text-field-4 marginbottom12 w-input" placeholder="Title text" id="title-text" value="5 ways to implement eCommerce personalization">
+                                        <input type="text" class="text-field-4 marginbottom12 w-input" placeholder="Title text" id="title-text">
                                         <label class="nomarginbottom">Title color</label>
-                                        <input type="text" class="text-field-4 marginbottom12 w-input jscolor" placeholder="Title color" id="title-color" value="#282828">
+                                        <input type="text" class="text-field-4 marginbottom12 w-input jscolor" placeholder="Title color" id="title-color">
                                     </div>
                                 </div>
                                 <div class="marginbottom24 w30tab w-clearfix">
@@ -651,9 +120,9 @@
                                         <span class="toggle-outside"><span class="toggle-inside"></span></span>
                                     </div>
                                     <div class="description-div">
-                                        <input type="text" class="text-field-4 marginbottom12 w-input" placeholder="Description text" id="description-text" value="Learn everything you need to know about implementing eccommerce pesornlazation on your website to.">
+                                        <input type="text" class="text-field-4 marginbottom12 w-input" placeholder="Description text" id="description-text">
                                         <label class="nomarginbottom">Description color</label>
-                                        <input type="text" class="text-field-4 marginbottom12 w-input jscolor" placeholder="Description color" id="description-color" value="#686868">
+                                        <input type="text" class="text-field-4 marginbottom12 w-input jscolor" placeholder="Description color" id="description-color">
                                     </div>
                                 </div>
                             </div>
@@ -717,7 +186,7 @@
                                         <span class="toggle-outside"><span class="toggle-inside"></span></span>
                                     </div>
                                     <div class="product1-div">
-                                        <input type="text" class="text-field-4 w-input" placeholder="Product URL" id="product1-url">
+                                        <input type="text" class="text-field-4 w-input" placeholder="Product URL" id="product1_url">
                                     </div>
                                 </div>
                                 <div class="marginbottom24 w30tab w-clearfix">
@@ -728,7 +197,7 @@
                                         <span class="toggle-outside"><span class="toggle-inside"></span></span>
                                     </div>
                                     <div class="product2-div">
-                                        <input type="text" class="text-field-4 w-input" placeholder="Product URL" id="product2-url">
+                                        <input type="text" class="text-field-4 w-input" placeholder="Product URL" id="product2_url">
                                     </div>
                                 </div>
                                 <div class="marginbottom24 w30tab w-clearfix">
@@ -738,7 +207,7 @@
                                         <span class="toggle-outside"><span class="toggle-inside"></span></span>
                                     </div>
                                     <div class="product3-div">
-                                        <input type="text" class="text-field-4 w-input" placeholder="Product URL" id="product3-url">
+                                        <input type="text" class="text-field-4 w-input" placeholder="Product URL" id="product3_url">
                                     </div>
                                 </div>
                             </div>
@@ -756,7 +225,7 @@
                                         <span class="toggle-outside"><span class="toggle-inside"></span></span>
                                     </div>
                                     <div class="button1-div">
-                                        <input type="text" class="text-field-4 w-input" placeholder="Button text" id="button1-text" value="Free laptop? I'm in!">
+                                        <input type="text" class="text-field-4 w-input" placeholder="Button text" id="button1-text">
                                         <label class="nomarginbottom inlinetext">Button URL</label>
                                         <input type="text" class="text-field-4 w-input" placeholder="Button URL" id="button1-url" value="#">
                                         <label class="nomarginbottom inlinetext">Background color</label>
@@ -792,27 +261,29 @@
                                 <div class="marginbottom24 w30tab w-clearfix">
                                     <label class="nomarginbottom inlinetext">Image</label>
                                     <div class="switch switch--horizontal">
-                                        <input type="radio" value="false" name="image-switch" checked="checked"/>
-                                        <input type="radio" value="true" name="image-switch"/>
+                                        <input type="radio" value="false" name="image-switch"/>
+                                        <input type="radio" value="true" name="image-switch" checked/>
                                         <span class="toggle-outside"><span class="toggle-inside"></span></span>
                                     </div>
                                     <div class="image-div">
-                                        <input type="text" class="text-field-4 w-input" placeholder="Image URL" id="image-url"><a href="#" class="button borderwhite noleftnothing w-button">Upload image</a>
+                                        <input type="text" class="text-field-4 w-input" placeholder="Image URL" id="image-url">
+                                        <input type="file" class="hidden" id="image-path" accept="image/*">
+                                        <a href="#" class="button borderwhite noleftnothing w-button" id="image-upload">Upload image</a>
                                         <label class="nomarginbottom">Image position</label>
                                         <div class="radio-button-field w-radio">
-                                            <input type="radio" name="image-position" value="top" class="radio-button w-radio-input">
+                                            <input type="radio" name="image-position" id="image-position" value="image-on-top" class="radio-button w-radio-input">
                                             <label class="w-form-label">Top</label>
                                         </div>
                                         <div class="radio-button-field w-radio">
-                                            <input type="radio" name="image-position" value="bottom" class="radio-button w-radio-input">
+                                            <input type="radio" name="image-position" id="image-position" value="image-on-bottom" class="radio-button w-radio-input">
                                             <label class="w-form-label">Bottom</label>
                                         </div>
                                         <div class="radio-button-field w-radio">
-                                            <input type="radio" name="image-position" value="right" class="radio-button w-radio-input" checked>
+                                            <input type="radio" name="image-position" id="image-position" value="image-right" class="radio-button w-radio-input" checked>
                                             <label class="w-form-label">Right</label>
                                         </div>
                                         <div class="radio-button-field w-radio">
-                                            <input type="radio" name="image-position" value="left" class="radio-button w-radio-input">
+                                            <input type="radio" name="image-position" id="image-position" value="image-left" class="radio-button w-radio-input">
                                             <label class="w-form-label">Left</label>
                                         </div>
                                     </div>
@@ -954,16 +425,16 @@
             </div><a data-w-id="182eb253-7879-50cf-1924-20a169e7ba05" class="button fullwidth100 nomarginbottom w-button" id="generate-code">Done</a>
         </div>
         <div class="relativepopup">
-            <div class="popup-container image-left" data-sm-init="true" data-state="success">
+            <div id="popup-container" class="popup-container" data-sm-init="true" data-state="success">
                 <div class="popup-half-column text-align-left">
                     <div class="popup-subtitle"></div>
                     <div class="popup-title"></div>
-                    <p class="popup-description">Learn everything you need to know about implementing eccommerce pesornlazation on your website to </p>
+                    <p class="popup-description"></p>
                     <div class="popup-form-block w-form">
                         <form id="email-form" name="email-form" data-name="Email Form" class="form">
                             <input type="text" class="popup-field field-style-2 w-input" maxlength="256" name="name" data-name="Name" placeholder="Name" id="name">
                             <input type="text" class="popup-field field-style-2 w-input" maxlength="256" name="email" data-name="email" placeholder="Email" id="email">
-                            <input type="submit" value="Free laptop? I&#x27;m In!" data-wait="Please wait..." class="popup-main-button w-button popup-button1">
+                            <input type="submit" value="" data-wait="Please wait..." class="popup-main-button w-button popup-button1">
                         </form>
                         <div class="w-form-done">
                             <div>Thank you! Your submission has been received!</div>
@@ -973,209 +444,67 @@
                         </div>
                     </div>
                 </div>
-                <div class="popup-half-column popup-image-full"><img src="images/generic-background.jpg" alt=""></div>
+                <div class="popup-half-column popup-image-full"><img class="popup-image" src="" alt=""></div>
             </div>
-            <div class="overlay-popup"></div>
         </div>
     </div>
     <script src="https://d1tdp7z6w94jbb.cloudfront.net/js/jquery-3.3.1.min.js" type="text/javascript" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="../../js/twik-v3.js" type="text/javascript"></script>
     <script src="../../js/jscolor.js" type="text/javascript"></script>
     <script src="../../js/slick.js" type="text/javascript"></script>
-
     <script type="text/javascript">
-        var settings;
-        $(document).ready(function(){
-            /*  -Switch button check-  */
-            for(var item of $('input[name$="-switch"]:checked')){
-                if($(item).val() == "true"){
-                    $("." + $(item).attr('name').split("-")[0] + "-div").show(300);
-                }else{
-                    $("." + $(item).attr('name').split("-")[0] + "-div").hide(300);
-                    $("." + $(item).attr('name').split("-")[0] + "-div").find("input[type='text']").val("");
-                }
+        var settings = {
+            "text" : {
+                "subtitle_text"         : "EXAMPLE OF TEXT",
+                "subtitle_color"        : "3369e7",
+                "title_text"            : "5 ways to implement eCommerce personalization",
+                "title_color"           : "000000",
+                "description_text"      : "Learn everything you need to know about implementing eccommerce pesornlazation on your website to",
+                "description_color"     : "686868",
+            },
+            "countdown" : {
+                "countdown_value"       : "",
+            },
+            "form" : {
+                "form_url"              : "",
+                "form_width"            : "",
+            },
+            "products" : {
+                "product1_url"          : "",
+                "product2_url"          : "",
+                "product3_url"          : "",
+            },
+            "buttons" : {
+                "button1_text"          : "Free laptop? I'm In!",
+                "button1_url"           : "#",
+                "button1_color"         : "ffffff",
+                "button1_background"    : "3369e7",
+                "button2_text"          : "",
+                "button2_url"           : "",
+                "button2_color"         : "",
+                "button2_background"    : "",
+            },
+            "image" : {
+                "image_url"             : "./images/generic-background.jpg",
+                "image_content"         : "",
+                "image_position"        : "image-left",
+            },
+            "animations" : {
+                "popup_type"            : "instant",
+                "popup_delay"           : "",
+                "popup_position"        : "center",
+                "popup_animation"       : "slideBottom",
+                "popup_auto"            : "",
+            },
+            "advanced" : {
+                "popup_class"           : {'width': '780px', 'background': 'transparent', 'padding': '0', 'margin': '0px', 'text-align': 'center'},
+                "popup_overlay"         : "",
+                "popup_mobile"          : "",
+                "popup_cancel"          : "",
+                "popup_cancel_position" : "inside",
             }
-            /*   -Switch button check end-   */
-
-            $('.popup-container').SlickModals({
-                popup_type: 'instant',
-                popup_animation: 'slideBottom',
-                popup_position: 'center',
-                popup_closeButtonPlace: 'inside',
-                popup_css: {
-                    'width': '780px',
-                    'background': 'transparent',
-                    'padding': '0',
-                    'margin': '0px',
-                    'text-align': 'center'
-                },
-                overlay_isVisible: false,
-            });
-            /*   -Populate-   */
-            settings = {
-                "text" : {
-                    "subtitle_text"         : $("#subtitle-text").val(),
-                    "subtitle_color"        : $("#subtitle-color").val(),
-                    "title_text"            : $("#title-text").val(),
-                    "title_color"           : $("#title-color").val(),
-                    "description_text"      : $("#description-text").val(),
-                    "description_color"     : $("#description-color").val()
-                },
-                "countdown" : {
-                    "countdown_value"       : $("#countdown-value").val()
-                },
-                "form" : {
-                    "form_url"              : $("#form-url").val(),
-                    "form_width"            : $("input[name='form-width']:checked").val()
-                },
-                "products" : {
-                    "product1_url"          : $("#product1_url").val(),
-                    "product2_url"          : $("#product2_url").val(),
-                    "product3_url"          : $("#product3_url").val(),
-                },
-                "buttons" : {
-                    "button1_text"          : $("#button1-text").val(),
-                    "button1_url"           : $("#button1-url").val(),
-                    "button1_color"         : $("#button1-color").val(),
-                    "button1_background"    : $("#button1-background").val(),
-                    "button2_text"          : $("#button2-text").val(),
-                    "button2_url"           : $("#button2-url").val(),
-                    "button2_color"         : $("#button2-color").val(),
-                    "button2_background"    : $("#button2-background").val(),
-                },
-                "image" : {
-                    "image_url"             : $("#image-url").val(),
-                    "image_content"         : "",
-                    "image_position"        : $("input[name='image-position']:checked").val()
-                },
-                "animations" : {
-                    "popup_type"            : $("#popup-type").val(),
-                    "popup_delay"           : $("#popup-delay").val(),
-                    "popup_position"        : $("#popup-position").val(),
-                    "popup_animation"       : $("#popup-animation").val(),
-                    "popup_auto"            : $("#popup-auto").val()
-                },
-                "advanced" : {
-                    "popup_class"           : $("#popup-class").val(),
-                    "popup_overlay"         : $("input[name='overlay']:checked").val(),
-                    "popup_mobile"          : $("input[name='mobile']:checked").val(),
-                    "popup_cancel"          : $("#popup-cancel").val(),
-                    "popup_cancel_position" : $("#popup-cancel-position").val(),
-                }
-            }
-            $(".popup-subtitle").html(settings.text.subtitle_text);
-            $(".popup-title").html(settings.text.title_text);
-            $(".popup-description").html(settings.text.description_text);
-            $(".popup-button1").val(settings.buttons.button1_text);
-            $(".popup-button1").attr('style', 'color: #' + settings.buttons.button1_color);
-            /*   -Populate end-   */
-        })
-        /*   -Switch button control-   */
-        $('input[name$="-switch"]').click(function(){
-            if($(this).val() == "true"){
-                $("." + $(this).attr('name').split("-")[0] + "-div").show(300);
-            }else{
-                $("." + $(this).attr('name').split("-")[0] + "-div").hide(300);
-                $("." + $(this).attr('name').split("-")[0] + "-div").find("input").val("");
-                $("." + $(this).attr('name').split("-")[0] + "-div").find("input").trigger('change');
-            }
-        })
-        /*   -Switch button control end-   */
-
-        /*   -Modifying settings-   */
-        $("input").on('change keyup', function(){
-            switch($(this).attr('id')){
-                case 'subtitle-text':
-                    $(".popup-subtitle").html($(this).val());
-                    break;
-                case 'subtitle-color':
-                    $(".popup-subtitle").attr('style', 'color: #' + $(this).val());
-                    break;
-                case 'title-text':
-                    $(".popup-title").html($(this).val());
-                    break;
-                case 'title-color':
-                    $(".popup-title").attr('style', 'color: #' + $(this).val());
-                    break;
-                case 'description-text':
-                    $(".popup-description").html($(this).val());
-                    break;
-                case 'description-color':
-                    $(".popup-description").attr('style', 'color: #' + $(this).val());
-                    break;
-                case 'button1-text':
-                    $(".popup-button1").val($(this).val());
-                    break;
-                case 'button1-url':
-                    $(".popup-form").attr('action', $(this).val());
-                    break;
-                case 'button1-color':
-                    $(".popup-button1").attr('style', 'color: #' + $(this).val());
-                    break;
-                case 'button1-background':
-                    $(".popup-button1").attr('style', 'background: #' + $(this).val());
-                    break;
-                default:
-                    break;
-            }
-        })
-        /*   -Modifying settings end-   */
-
-        /*   -Generate code-   */
-        $("#generate-code").click(function(){
-            settings = {
-                "text" : {
-                    "subtitle_text"         : $("#subtitle-text").val(),
-                    "subtitle_color"        : $("#subtitle-color").val(),
-                    "title_text"            : $("#title-text").val(),
-                    "title_color"           : $("#title-color").val(),
-                    "description_text"      : $("#description-text").val(),
-                    "description_color"     : $("#description-color").val()
-                },
-                "countdown" : {
-                    "countdown_value"       : $("#countdown-value").val()
-                },
-                "form" : {
-                    "form_url"              : $("#form-url").val(),
-                    "form_width"            : $("input[name='form-width']:checked").val()
-                },
-                "products" : {
-                    "product1_url"          : $("#product1_url").val(),
-                    "product2_url"          : $("#product2_url").val(),
-                    "product3_url"          : $("#product3_url").val(),
-                },
-                "buttons" : {
-                    "button1_text"          : $("#button1-text").val(),
-                    "button1_url"           : $("#button1-url").val(),
-                    "button1_color"         : $("#button1-color").val(),
-                    "button1_background"    : $("#button1-background").val(),
-                    "button2_text"          : $("#button2-text").val(),
-                    "button2_url"           : $("#button2-url").val(),
-                    "button2_color"         : $("#button2-color").val(),
-                    "button2_background"    : $("#button2-background").val(),
-                },
-                "image" : {
-                    "image_url"             : $("#image-url").val(),
-                    "image_content"         : "",
-                    "image_position"        : $("input[name='image-position']:checked").val()
-                },
-                "animations" : {
-                    "popup_type"            : $("#popup-type").val(),
-                    "popup_delay"           : $("#popup-delay").val(),
-                    "popup_position"        : $("#popup-position").val(),
-                    "popup_animation"       : $("#popup-animation").val(),
-                    "popup_auto"            : $("#popup-auto").val()
-                },
-                "advanced" : {
-                    "popup_class"           : $("#popup-class").val(),
-                    "popup_overlay"         : $("input[name='overlay']:checked").val(),
-                    "popup_mobile"          : $("input[name='mobile']:checked").val(),
-                    "popup_cancel"          : $("#popup-cancel").val(),
-                    "popup_cancel_position" : $("#popup-cancel-position").val(),
-                }
-            }
-        })
-        /*   -Generate code end-   */
+        }
     </script>
+    <script src="../../js/generator.js" type="text/javascript"></script>
 </body>
 </html>
