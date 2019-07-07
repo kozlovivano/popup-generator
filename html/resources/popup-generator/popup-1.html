@@ -66,6 +66,10 @@
                 width: calc(100% + 34px);
             }
         }
+
+        .hidden {
+            display: none;
+        }
         
         img.image-59 {
             object-fit: cover;
@@ -210,6 +214,13 @@
             -webkit-flex-direction: column-reverse;
             -ms-flex-direction: column-reverse;
             flex-direction: column-reverse;
+        }
+        .popup-container.image-on-bottom {
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: reverse;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
         }
         .popup-half-column {
             display: -webkit-box;
@@ -625,9 +636,9 @@
                                         <span class="toggle-outside"><span class="toggle-inside"></span></span>
                                     </div>
                                     <div class="subtitle-div">
-                                        <input type="text" class="text-field-4 marginbottom12 w-input" placeholder="Subtitle text" id="subtitle-text" value="TIME LIMITED OFFER">
+                                        <input type="text" class="text-field-4 marginbottom12 w-input" placeholder="Subtitle text" id="subtitle-text">
                                         <label class="nomarginbottom">Subtitle color</label>
-                                        <input type="text" class="text-field-4 marginbottom12 w-input jscolor" placeholder="Subtitle color" id="subtitle-color" value="#3369e7">
+                                        <input type="text" class="text-field-4 marginbottom12 w-input jscolor" placeholder="Subtitle color" id="subtitle-color">
                                     </div>
                                 </div>
                                 <div class="marginbottom24 w30tab w-clearfix">
@@ -638,9 +649,9 @@
                                         <span class="toggle-outside"><span class="toggle-inside"></span></span>
                                     </div>
                                     <div class="title-div">
-                                        <input type="text" class="text-field-4 marginbottom12 w-input" placeholder="Title text" id="title-text" value="Win a $250 gift card for your dream chair">
+                                        <input type="text" class="text-field-4 marginbottom12 w-input" placeholder="Title text" id="title-text">
                                         <label class="nomarginbottom">Title color</label>
-                                        <input type="text" class="text-field-4 marginbottom12 w-input jscolor" placeholder="Title color" id="title-color" value="#282828">
+                                        <input type="text" class="text-field-4 marginbottom12 w-input jscolor" placeholder="Title color" id="title-color">
                                     </div>
                                 </div>
                                 <div class="marginbottom24 w30tab w-clearfix">
@@ -651,9 +662,9 @@
                                         <span class="toggle-outside"><span class="toggle-inside"></span></span>
                                     </div>
                                     <div class="description-div">
-                                        <input type="text" class="text-field-4 marginbottom12 w-input" placeholder="Description text" id="description-text" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros.">
+                                        <input type="text" class="text-field-4 marginbottom12 w-input" placeholder="Description text" id="description-text">
                                         <label class="nomarginbottom">Description color</label>
-                                        <input type="text" class="text-field-4 marginbottom12 w-input jscolor" placeholder="Description color" id="description-color" value="#686868">
+                                        <input type="text" class="text-field-4 marginbottom12 w-input jscolor" placeholder="Description color" id="description-color">
                                     </div>
                                 </div>
                             </div>
@@ -717,7 +728,7 @@
                                         <span class="toggle-outside"><span class="toggle-inside"></span></span>
                                     </div>
                                     <div class="product1-div">
-                                        <input type="text" class="text-field-4 w-input" placeholder="Product URL" id="product1-url">
+                                        <input type="text" class="text-field-4 w-input" placeholder="Product URL" id="product1_url">
                                     </div>
                                 </div>
                                 <div class="marginbottom24 w30tab w-clearfix">
@@ -728,7 +739,7 @@
                                         <span class="toggle-outside"><span class="toggle-inside"></span></span>
                                     </div>
                                     <div class="product2-div">
-                                        <input type="text" class="text-field-4 w-input" placeholder="Product URL" id="product2-url">
+                                        <input type="text" class="text-field-4 w-input" placeholder="Product URL" id="product2_url">
                                     </div>
                                 </div>
                                 <div class="marginbottom24 w30tab w-clearfix">
@@ -738,7 +749,7 @@
                                         <span class="toggle-outside"><span class="toggle-inside"></span></span>
                                     </div>
                                     <div class="product3-div">
-                                        <input type="text" class="text-field-4 w-input" placeholder="Product URL" id="product3-url">
+                                        <input type="text" class="text-field-4 w-input" placeholder="Product URL" id="product3_url">
                                     </div>
                                 </div>
                             </div>
@@ -756,7 +767,7 @@
                                         <span class="toggle-outside"><span class="toggle-inside"></span></span>
                                     </div>
                                     <div class="button1-div">
-                                        <input type="text" class="text-field-4 w-input" placeholder="Button text" id="button1-text" value="Submit">
+                                        <input type="text" class="text-field-4 w-input" placeholder="Button text" id="button1-text">
                                         <label class="nomarginbottom inlinetext">Button URL</label>
                                         <input type="text" class="text-field-4 w-input" placeholder="Button URL" id="button1-url" value="#">
                                         <label class="nomarginbottom inlinetext">Background color</label>
@@ -797,22 +808,24 @@
                                         <span class="toggle-outside"><span class="toggle-inside"></span></span>
                                     </div>
                                     <div class="image-div">
-                                        <input type="text" class="text-field-4 w-input" placeholder="Image URL" id="image-url"><a href="#" class="button borderwhite noleftnothing w-button">Upload image</a>
+                                        <input type="text" class="text-field-4 w-input" placeholder="Image URL" id="image-url">
+                                        <input type="file" class="hidden" id="image-path" accept="image/*">
+                                        <a href="#" class="button borderwhite noleftnothing w-button" id="image-upload">Upload image</a>
                                         <label class="nomarginbottom">Image position</label>
                                         <div class="radio-button-field w-radio">
-                                            <input type="radio" name="image-position" value="top" class="radio-button w-radio-input">
+                                            <input type="radio" name="image-position" id="image-position" value="top" class="radio-button w-radio-input">
                                             <label class="w-form-label">Top</label>
                                         </div>
                                         <div class="radio-button-field w-radio">
-                                            <input type="radio" name="image-position" value="bottom" class="radio-button w-radio-input">
+                                            <input type="radio" name="image-position" id="image-position" value="bottom" class="radio-button w-radio-input">
                                             <label class="w-form-label">Bottom</label>
                                         </div>
                                         <div class="radio-button-field w-radio">
-                                            <input type="radio" name="image-position" value="right" class="radio-button w-radio-input" checked>
+                                            <input type="radio" name="image-position" id="image-position" value="right" class="radio-button w-radio-input" checked>
                                             <label class="w-form-label">Right</label>
                                         </div>
                                         <div class="radio-button-field w-radio">
-                                            <input type="radio" name="image-position" value="left" class="radio-button w-radio-input">
+                                            <input type="radio" name="image-position" id="image-position" value="left" class="radio-button w-radio-input">
                                             <label class="w-form-label">Left</label>
                                         </div>
                                     </div>
@@ -975,7 +988,7 @@
                 </div>
                 <div class="popup-half-column popup-image-full"><img src="./images/generic-background.jpg" alt=""></div>
             </div>
-            <div class="overlay-popup"></div>
+            <!-- <div class="overlay-popup"></div> -->
         </div>
     </div>
     <script src="https://d1tdp7z6w94jbb.cloudfront.net/js/jquery-3.3.1.min.js" type="text/javascript" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -985,33 +998,46 @@
 
     <script type="text/javascript">
         var settings;
-        $(document).ready(function(){
-            /*  -Switch button check-  */
-            for(var item of $('input[name$="-switch"]:checked')){
-                if($(item).val() == "true"){
-                    $("." + $(item).attr('name').split("-")[0] + "-div").show(300);
-                }else{
-                    $("." + $(item).attr('name').split("-")[0] + "-div").hide(300);
-                    $("." + $(item).attr('name').split("-")[0] + "-div").find("input[type='text']").val("");
-                }
-            }
-            /*   -Switch button check end-   */
+        let defaultSetting
+            
+        let submitCode = "";
+        let formCode = [];
+        let cancelCode = "";
+        let formAction = "";
+        let defaultUrl = "./images/generic-background.jpg";
 
-            $('.popup-container').SlickModals({
-                popup_type: 'instant',
-                popup_animation: 'slideBottom',
-                popup_position: 'center',
-                popup_closeButtonPlace: 'inside',
-                popup_css: {
-                    'width': '780px',
-                    'background': 'transparent',
-                    'padding': '0',
-                    'margin': '0px',
-                    'text-align': 'center'
-                },
-                overlay_isVisible: false,
-            });
-            /*   -Populate-   */
+        var animation = {
+            //
+        };
+
+        function getDataUri(url, callback, w, h) {
+            var image = new Image();
+
+            image.onload = function () {
+                var ratio = 1;
+                if (this.naturalWidth > this.naturalHeight) {
+                    if (this.naturalWidth > w) {
+                        ratio = w / this.naturalWidth
+                    }
+                } else {
+                    if (this.naturalHeight > h) {
+                        ratio = h / this.naturalHeight
+                    }
+                }
+                var imgSize = {width: this.naturalWidth * ratio, height: this.naturalHeight * ratio};
+                var canvas = document.createElement('canvas');
+                canvas.width = imgSize.width; // or 'width' if you want a special/scaled size
+                canvas.height = imgSize.height; // or 'height' if you want a special/scaled size
+
+                canvas.getContext('2d').drawImage(this, 0, 0);
+                // ... or get as Data URI
+                callback(canvas.toDataURL('image/png'));
+            };
+            image.crossOrigin = "Anonymous";
+            image.src = url;
+        }
+
+        var getSettings = function () {            
             settings = {
                 "text" : {
                     "subtitle_text"         : $("#subtitle-text").val(),
@@ -1063,6 +1089,42 @@
                     "popup_cancel_position" : $("#popup-cancel-position").val(),
                 }
             }
+        }
+
+        var trySettings = function () {
+            $('.popup-container').SlickModals({
+                popup_type: settings.animations.popup_type,
+                popup_animation: 'slideBottom',
+                popup_position: 'center',
+                popup_closeButtonPlace: 'inside',
+                popup_css: {
+                    'width': '780px',
+                    'background': 'transparent',
+                    'padding': '0',
+                    'margin': '0px',
+                    'text-align': 'center'
+                },
+                overlay_isVisible: false,
+            });
+        }
+
+        $(document).ready(function(){
+            /*  -Switch button check-  */
+            for(var item of $('input[name$="-switch"]:checked')){
+                if($(item).val() == "true"){
+                    $("." + $(item).attr('name').split("-")[0] + "-div").show(300);
+                }else{
+                    $("." + $(item).attr('name').split("-")[0] + "-div").hide(300);
+                    $("." + $(item).attr('name').split("-")[0] + "-div").find("input[type='text']").val("");
+                }
+            }
+
+            /*   -Switch button check end-   */
+
+            getSettings();
+            trySettings();
+
+            /*   -Populate-   */
             $(".popup-subtitle").html(settings.text.subtitle_text);
             $(".popup-title").html(settings.text.title_text);
             $(".popup-description").html(settings.text.description_text);
@@ -1087,6 +1149,7 @@
             switch($(this).attr('id')){
                 case 'subtitle-text':
                     $(".popup-subtitle").html($(this).val());
+                    settings.
                     break;
                 case 'subtitle-color':
                     $(".popup-subtitle").attr('style', 'color: #' + $(this).val());
@@ -1115,11 +1178,65 @@
                 case 'button1-background':
                     $(".popup-button1").attr('style', 'background: #' + $(this).val());
                     break;
+                case 'image-url':
+                    let prevUrl = $('.popup-image-full img').attr('src');
+                    let newUrl = $(this).val();        
+                    // Usage
+                    getDataUri(newUrl, function(dataUri) {
+                        $('.popup-image-full').html("");
+                        $('.popup-image-full').append("<img style='max-width: 100%; max-height: 360px;' src='" + dataUri + "'/>");
+                    // $('.image').show();
+                    // $('.image').html("$('&lt;img style=\"margin-top: 40px\" width=\"300\" height=\"150\" src=\"" + $(this).val() + "\"/&gt;').appendTo('.myPopup');");
+                    });
+                    break;
+                case 'image-path':
+                    if(this.files && this.files[0]){
+                        let reader = new FileReader();
+                        let filename = this.files[0].name;
+                        reader.onload = function(e) {
+                            $('#image-url').val(filename);
+                            $('.popup-image-full').html("");
+                            $('.popup-image-full').append("<img style='max-width: 100%; max-height: 360px;' src='" + e.target.result + "'/>");
+                        }
+                        reader.readAsDataURL(this.files[0]);
+                    }
+                    break;
+                case 'image-position':
+                    $('.popup-container').removeClass('image-left image-on-top image-on-bottom');
+                    var img_classes = {
+                        'top': 'image-on-top',
+                        'bottom': 'image-on-bottom',
+                        'left': 'image-left',
+                        'right': ''
+                    }
+
+                    let layout = $(this).val();
+                    var img_cls = img_classes[layout];
+                    if (img_cls != '') {
+                        $('.popup-container').addClass(img_cls);
+                        console.log(img_cls);
+                    }
+                    if (layout == 'top' || layout == 'bottom') {
+                        //vertical
+                        $('.sm-popup').width('390px');
+                    } else {
+                        //horizontal
+                        $('.sm-popup').width('780px');
+                    }
+                    break;
+                case 'popup-type':
+                    getSettings();
+                    trySettings();
+                    break;
                 default:
                     break;
             }
         })
         /*   -Modifying settings end-   */
+
+        $('#image-upload').on('click', function() {
+            $('#image-path').click();
+        })
 
         /*   -Generate code-   */
         $("#generate-code").click(function(){
@@ -1174,8 +1291,92 @@
                     "popup_cancel_position" : $("#popup-cancel-position").val(),
                 }
             }
+
+            // submitCode = "$('<input type=\"submit\" class=\"google-submit\" value=\"" + settings.buttons.button1_text + "\" style=\"background-color: #" + button1_background + "\"/>').appendTo('#smForm-1');";
+            // cancelCode = "$('<input type=\"button\" class=\"google-submit\" value=\"" + button2_text + "\" style=\"background-color: #" + button2_background + "\"/>').appendTo('#smForm-1');";
+
+            // formCode.push(submitCode);
+            // formCode.push(cancelCode);
+            // let addCode = '';
+            // for(let item of formCode){
+            //     addCode += item;
+            // }
+            // $('.form-elements').text(addCode);
+            // $('.thankyou-text').html($("#field-thankYouText").val());
+            // $console.find('.lvl2').prepend(emptySpace.repeat(8));
+
+            // var s = window.getSelection();
+            // var r = document.createRange();
+
+            // r.selectNodeContents($console[0]);
+            // s.removeAllRanges();
+            // s.addRange(r);
+            // document.execCommand('copy');
+
+            // var $this = $(this);
+            // var originalText = $this.text();
+            // $this.text('CODE COPIED!').addClass('active');
+            // setTimeout(function () {
+            //     $this.text(originalText).removeClass('active');
+            //     s.removeAllRanges();
+            // }, 2000);
         })
         /*   -Generate code end-   */
+
+        var getDefaultSettings = function() {
+            defaultSetting = {
+                "text" : {
+                    "subtitle_text"         : 'TIME LIMITED OFFER',
+                    "subtitle_color"        : '#3369e7',
+                    "title_text"            : "Win a $250 gift card for your dream chair",
+                    "title_color"           : "#282828",
+                    "description_text"      : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros.",
+                    "description_color"     : "#686868"
+                },
+                "countdown" : {
+                    "countdown_value"       : $("#countdown-value").val()
+                },
+                "form" : {
+                    "form_url"              : $("#form-url").val(),
+                    "form_width"            : $("input[name='form-width']:checked").val()
+                },
+                "products" : {
+                    "product1_url"          : '',
+                    "product2_url"          : '',
+                    "product3_url"          : '',
+                },
+                "buttons" : {
+                    "button1_text"          : 'Submit',
+                    "button1_url"           : $("#button1-url").val(),
+                    "button1_color"         : $("#button1-color").val(),
+                    "button1_background"    : $("#button1-background").val(),
+                    "button2_text"          : $("#button2-text").val(),
+                    "button2_url"           : $("#button2-url").val(),
+                    "button2_color"         : $("#button2-color").val(),
+                    "button2_background"    : $("#button2-background").val(),
+                },
+                "image" : {
+                    "image_url"             : $("#image-url").val(),
+                    "image_content"         : "",
+                    "image_position"        : $("input[name='image-position']:checked").val()
+                },
+                "animations" : {
+                    "popup_type"            : 'none',
+                    "popup_delay"           : '',
+                    "popup_position"        : 'center',
+                    "popup_animation"       : 'fadeIn',
+                    "popup_auto"            : 'yes'
+                },
+                "advanced" : {
+                    "popup_class"           : $("#popup-class").val(),
+                    "popup_overlay"         : $("input[name='overlay']:checked").val(),
+                    "popup_mobile"          : $("input[name='mobile']:checked").val(),
+                    "popup_cancel"          : $("#popup-cancel").val(),
+                    "popup_cancel_position" : $("#popup-cancel-position").val(),
+                }
+            }
+        }
+        getDefaultSettings();
     </script>
 </body>
 </html>
