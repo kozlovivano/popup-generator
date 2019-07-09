@@ -1,4 +1,5 @@
 /*   Set values to inputs from settings   */
+var x;
 var setSettings = function(){
     $("#subtitle-text").val(settings.text.subtitle_text);
     $("#subtitle-color").val(settings.text.subtitle_color);
@@ -123,6 +124,19 @@ var classFormat = function(val){
     return ret;
 }
 $(document).ready(function(){
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10){
+        dd='0'+dd
+    } 
+    if(mm<10){
+        mm='0'+mm
+    } 
+    today = yyyy + "-" + mm + "-" + dd;
+    $("#countdown-value").attr('min', today);
+    
     /*  -Switch button check-  */
     for(var item of $('input[name$="-switch"]:checked')){
         if($(item).val() == "true"){
@@ -217,6 +231,31 @@ $("input").on('change keyup', function(){
                 //horizontal
                 $('.sm-popup').width('780px');
             }
+            break;
+        case 'countdown-value':
+            clearInterval(x);
+            var countDownDate = new Date($(this).val()).getTime();
+            x = setInterval(function() {
+                // Get today's date and time
+                var now = new Date().getTime();
+
+                // Find the distance between now and the count down date
+                var distance = countDownDate - now;
+
+                // Time calculations for days, hours, minutes and seconds
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                $(".popup-hours").html(hours + days * 24);
+                $(".popup-minutes").html(minutes);
+                $(".popup-seconds").html(seconds);
+                // If the count down is finished, write some text 
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("demo").innerHTML = "EXPIRED";
+                }
+            }, 1000);
             break;
         default:
             break;
