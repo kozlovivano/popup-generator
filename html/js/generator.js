@@ -1,5 +1,5 @@
 /*   Set values to inputs from settings   */
-var x;
+var x; //Countdown timer 
 var setSettings = function(){
     $("#subtitle-text").val(settings.text.subtitle_text);
     $("#subtitle-color").val(settings.text.subtitle_color);
@@ -123,16 +123,35 @@ var classFormat = function(val){
     }
     return ret;
 }
+var setProduct = function(url){
+    var _url = "http://anyorigin.com/go?url=" + encodeURIComponent(url);
+    console.log(_url);
+    var xhr = new XMLHttpRequest();
+    xhr.open('get', _url, true);
+    xhr.onreadystatechange = checkUrl;
+    function checkUrl(){
+        if (xhr.readyState === 4) {
+            if ((xhr.status == 200) || (xhr.status == 0)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+
+        }
+    }
+    xhr.send(null);
+}
 $(document).ready(function(){
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth()+1; //January is 0!
     var yyyy = today.getFullYear();
     if(dd<10){
-        dd='0'+dd
+        dd='0'+dd;
     } 
     if(mm<10){
-        mm='0'+mm
+        mm='0'+mm;
     } 
     today = yyyy + "-" + mm + "-" + dd;
     $("#countdown-value").attr('min', today);
@@ -256,6 +275,18 @@ $("input").on('change keyup', function(){
                     document.getElementById("demo").innerHTML = "EXPIRED";
                 }
             }, 1000);
+            break;
+        case 'form-width':
+            if($(this).val() == '50'){
+                $('form .popup-field').removeClass('w-input field-50');
+                $('form .popup-field').addClass('field-50');
+            }else{
+                $('form .popup-field').removeClass('w-input field-50');
+                $('form .popup-field').addClass('w-input');
+            }
+            break;
+        case 'product1_url':
+            console.log(setProduct($(this).val()));
             break;
         default:
             break;
