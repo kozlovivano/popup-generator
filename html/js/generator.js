@@ -1,18 +1,18 @@
 /*   Set values to inputs from settings   */
+
+var CONFIG = {
+    "base64_img": true,
+    "base64_online": false, //exception on other domain images
+    "max_code_length": 2000,
+};
 var x; //Countdown timer 
-var setSettings = function(){
-    $("#subtitle-text").val(settings.text.subtitle_text);
-    $("#subtitle-color").val(settings.text.subtitle_color);
+var applyFormSetting = function() {
     $("#title-text").val(settings.text.title_text);
     $("#title-color").val(settings.text.title_color);
+    $("#subtitle-text").val(settings.text.subtitle_text);
+    $("#subtitle-color").val(settings.text.subtitle_color);
     $("#description-text").val(settings.text.description_text);
     $("#description-color").val(settings.text.description_color)
-    $("#countdown-value").val(settings.countdown.countdown_value);
-    $("#form-url").val(settings.form.form_url);
-    //$("input[name='form-width']:checked").val()
-    $("#product1_url").val(settings.products.product1_url);
-    $("#product2_url").val(settings.products.product2_url);
-    $("#product3_url").val(settings.products.product3_url);
     $("#button1-text").val(settings.buttons.button1_text);
     $("#button1-url").val(settings.buttons.button1_url);
     $("#button1-color").val(settings.buttons.button1_color);
@@ -20,7 +20,18 @@ var setSettings = function(){
     $("#button2-text").val(settings.buttons.button2_text);
     $("#button2-url").val(settings.buttons.button2_url);
     $("#button2-color").val(settings.buttons.button2_color);
-    $("#button2-background").val(settings.buttons.button2_background);
+    $("#button2-background").val(settings.buttons.button2_background);    
+}
+
+var setSettings = function(){
+    applyFormSetting();
+    
+    $("#countdown-value").val(settings.countdown.countdown_value);
+    $("#form-url").val(settings.form.form_url);
+    //$("input[name='form-width']:checked").val()
+    $("#product1_url").val(settings.products.product1_url);
+    $("#product2_url").val(settings.products.product2_url);
+    $("#product3_url").val(settings.products.product3_url);
     $("#image-url").val(settings.image.image_url);
     //$("input[name='image-position']:checked").val()
     $("#popup-type").val(settings.animations.popup_type);
@@ -37,6 +48,7 @@ var setSettings = function(){
 /*   Get settings from inputs   */
 var getSettings = function(){
     settings = {
+        "html": settings.html,
         "text" : {
             "subtitle_text"         : $("#subtitle-text").val(),
             "subtitle_color"        : $("#subtitle-color").val(),
@@ -68,6 +80,7 @@ var getSettings = function(){
             "button2_background"    : $("#button2-background").val(),
         },
         "image" : {
+            "image_data"            : settings.image.image_data,
             "image_url"             : $("#image-url").val(),
             "image_content"         : "",
             "image_position"        : $("input[name='image-position']:checked").val()
@@ -80,13 +93,14 @@ var getSettings = function(){
             "popup_auto"            : $("#popup-auto").val()
         },
         "advanced" : {
-            "popup_class"           : $("#popup-class").val(),
+            "popup_class"           : classObj($("#popup-class").val()),
             "popup_overlay"         : $("input[name='overlay']:checked").val(),
             "popup_mobile"          : $("input[name='mobile']:checked").val(),
             "popup_cancel"          : $("#popup-cancel").val(),
             "popup_cancel_position" : $("#popup-cancel-position").val(),
         }
-    }
+    };
+    if (settings.advanced.popup_cancel == null) settings.advanced.popup_cancel = "";
 }
 /*   Populate setting values   */
 var populateSettings = function(){
@@ -102,18 +116,147 @@ var populateSettings = function(){
         $(".popup-button1").html(settings.buttons.button1_text);
     }
     $(".popup-button1").attr('style', 'color: #' + settings.buttons.button1_color);
+
     // Form settings
-    $(".popup-image").attr('src', settings.image.image_url);
+    if (settings.image.image_data === undefined || settings.image.image_data === null || settings.image.image_data == '')
+        $(".popup-image").attr('src', settings.image.image_url);
+    else
+        $(".popup-image").attr('src', settings.image.image_data);
     $("#popup-container").addClass(settings.image.image_position);
 }
-var trySettings = function () {
-    $('.popup-container').SlickModals({
+var generateCode = function (selector, callback) {
+
+    var params = {
         popup_type: settings.animations.popup_type,
         popup_animation: settings.animations.popup_animation,
         popup_position: settings.animations.popup_position,
         popup_closeButtonPlace: settings.advanced.popup_cancel_position,
         popup_css: settings.advanced.popup_class,
         overlay_isVisible: false,
+    };
+    //https://www.twik.io/css
+    //http://localhost:3333
+    //"http://www.twik.io/css/normalize.css", "http://www.twik.io/css/components.css", "http://www.twik.io/css/twik-v3.css"
+    // var cssList = [ "http://www.twik.io/css/slick.css" ];
+    // var cssStr = "";
+    // for (var i = 0; i < cssList.length; i++) {
+    //     cssStr = cssStr + '<link href="' + cssList[i] + '" rel="stylesheet" type="text/css"> ';
+    // }
+    // cssStr = cssStr.replace(/>[\n\t ]+</g, "><");
+    // var cssScript = "$('" + cssStr + "').appendTo('head');"
+    var cssScript = "";
+    // var html = '<div id="popup-container" class="popup-container" data-sm-init="true" data-state="success"> ' + $('.popup-container').html() + '</div>';
+    var html = settings.html;
+    if (html == null) html = "";
+
+    $('div.test').html('');
+    settings.formHtml = $('div.test').append($('form').clone()).html();    
+
+    html = html.replace(/>[\n\t ]+</g, "><").replace(/'/g, '&#39;');
+    $('div.test').html(html);
+    if (settings.formHtml !== undefined && settings.formHtml != null && settings.formHtml != '') {
+        $('div.test form').remove();
+        $(settings.formHtml).appendTo('div.test div.popup-form-block');
+    }
+    setSettings();
+    populateSettings();
+
+    convertImagesToBase64(selector, function () {
+        html = "$('" + $('div.test').html().replace(/>[\n\t ]+</g, "><").replace(/'/g, '&#39;') + "').appendTo('div.regularsection');";
+        $('div.test').html('');
+
+        var runScript = "$('.popup-container').SlickModals({ popup_type: '" + settings.animations.popup_type + "', popup_animation: '" + settings.animations.popup_animation + "', popup_position: '" + settings.animations.popup_position + "', popup_closeButtonPlace: '" + settings.advanced.popup_cancel_position + "', popup_css: '" + settings.advanced.popup_class + "', overlay_isVisible: false,});";
+        runScript = "var params = " + JSON.stringify(params) + "; $('.popup-container').SlickModals(params);";
+        // runScript = '$.getScript("https://cdn.twik.io/generator/js/jquery.slickmodal.min.js", function () {' + runScript + '});';
+
+        callback(cssScript + html + runScript);
+    });
+}
+var convertFileToBase64 = function(file, callback) {
+
+    let reader = new FileReader();
+    let filename = file.name;
+    reader.onload = function(e) {
+        callback(filename, e.target.result);
+    }
+    reader.readAsDataURL(file);
+}
+
+var convertImgToBase64 = function (img, callback) {
+    if (img === undefined) callback('');
+    var url = img.src;
+    var outputFormat = "image/png";
+    if (url.startsWith('data:image/')) {
+        callback(url);
+        return;
+    }
+    if (CONFIG.base64_online == false && url.startsWith('http') == true) {
+        callback(url);
+        return;
+    }
+    
+    img.onload = function () {        
+        var canvas = document.createElement('CANVAS');
+        var ctx = canvas.getContext('2d');
+        var dataURL = '';
+        var ratioX = img.width * 1.0 / img.naturalWidth;
+        var ratioY = img.height * 1.0 / img.naturalHeight;
+        var ratio = (ratioX > ratioY) ? ratioX : ratioY;
+        if (ratio > 1.0) ratio = 1.0;
+        canvas.height = img.naturalHeight * ratio;
+        canvas.width = img.naturalWidth * ratio;
+        ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, canvas.width, canvas.height);
+        try {
+            dataURL = canvas.toDataURL(outputFormat);
+        }catch(e) {
+            console.log(e);
+        }
+        callback (dataURL);
+        this.onload = undefined;
+    }
+    if (img.complete == true) {
+        img.onload();
+    }
+}
+
+var convertImageToBase64 = function (url, callback) {
+    $('div.test').html('');
+    $img = $('.popup-container img');
+    if ($img[0] === undefined) {
+        $('div.test').append($('<img>'));
+    } else {
+        $('div.test').append($img.clone());
+    }
+    var img = $('div.test img')[0];
+    img.src = url;
+    convertImgToBase64(img, function(data) {
+        $('div.test').html('');
+        callback(data);
+    });
+}
+
+var convertImagesToBase64 = function(selector, callback) {
+    if (CONFIG.base64_img == false) {
+        callback();
+        return;
+    }
+    var deferreds = [];
+    $(selector).each(function() {        
+        var deferred = $.Deferred();
+        $(this).one('load', deferred.resolve);
+        deferreds.push(deferred);
+    });
+    $.when.apply($, deferreds).done(function() {
+        $(selector).each(function() {
+            var img = $(this)[0];
+            convertImgToBase64(img, function (data) {
+                img.src = data;
+            });
+        });
+        callback();
+    }).fail(function() {
+        console.log('fail to convertImagesToBase64');
+        callback();
     });
 }
 var classFormat = function(val){
@@ -123,24 +266,63 @@ var classFormat = function(val){
     }
     return ret;
 }
-var setProduct = function(url){
-    var _url = "http://anyorigin.com/go?url=" + encodeURIComponent(url);
-    console.log(_url);
-    var xhr = new XMLHttpRequest();
-    xhr.open('get', _url, true);
-    xhr.onreadystatechange = checkUrl;
-    function checkUrl(){
-        if (xhr.readyState === 4) {
-            if ((xhr.status == 200) || (xhr.status == 0)) {
-                return true;
-            }
-            else {
-                return false;
-            }
+var classObj = function(cssStr){
+    var fields = cssStr.split('; ');
+    var obj = new Object();
+    for (var i = fields.length - 1; i >= 0; i--) {
+        var itemStr = fields[i];
+        if (itemStr == "") continue;
+        var items = itemStr.split(': ');
+        obj[items[0]] = items[1];
+    }
+    return obj;
+}
 
+var setProduct = function(url, idx){
+    // $.ajax({
+    //     crossOrigin: true,
+    //     url: url,
+    //     success: function(data) {
+    //         console.log(data);
+    //     }
+    // });
+    // $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
+    //     alert(data.contents);
+    // });
+    //https://cors-anywhere.herokuapp.com/https://themes.woocommerce.com/storefront/product/lowepro-slingshot-edge-250-aw
+    scrapeProduct(url, idx);
+    return;
+
+    var _url = "https://cors-anywhere.herokuapp.com/" + url;
+    var xhr=null;
+    try
+    {
+        xhr = new XMLHttpRequest(); 
+    } catch(e)
+    { 
+            try { xhr = new ActiveXObject("Msxml2.XMLHTTP"); } 
+            catch (e2)
+        { 
+            try { xhr = new ActiveXObject("Microsoft.XMLHTTP"); } 
+            catch (e) {}
         }
     }
+    xhr.onload = function() {
+        console.log(`Loaded: ${xhr.status} ${xhr.response}`);
+      };
+    xhr.open("GET", _url, true);
     xhr.send(null);
+    setTimeout(() => {
+        let headers = xhr
+        .getAllResponseHeaders()
+        .split('\r\n')
+        .reduce((result, current) => {
+            let [name, value] = current.split(': ');
+            result[name] = value;
+            return result;
+        }, {});
+        console.log('response header', headers)
+    }, 3000);
 }
 $(document).ready(function(){
     var today = new Date();
@@ -167,9 +349,14 @@ $(document).ready(function(){
     }
     /*   -Switch button check end-   */
     /*   -Populate-   */
-    setSettings();
-    populateSettings();
-    trySettings();
+    generateCode('', function (code) {
+        console.log(code);
+        eval(code);
+
+        // setSettings();
+        // populateSettings();
+    });
+    
     /*   -Populate end-   */
 })
 /*   -Switch button control-   */
@@ -185,25 +372,16 @@ $('input[name$="-switch"]').click(function(){
 /*   -Switch button control end-   */
 
 /*   -Modifying settings-   */
-$("input").on('change keyup', function(){
+$("input").on('keyup', function(){
     switch($(this).attr('id')){
         case 'subtitle-text':
             $(".popup-subtitle").html($(this).val());
             break;
-        case 'subtitle-color':
-            $(".popup-subtitle").attr('style', 'color: #' + $(this).val());
-            break;
         case 'title-text':
             $(".popup-title").html($(this).val());
             break;
-        case 'title-color':
-            $(".popup-title").attr('style', 'color: #' + $(this).val());
-            break;
         case 'description-text':
             $(".popup-description").html($(this).val());
-            break;
-        case 'description-color':
-            $(".popup-description").attr('style', 'color: #' + $(this).val());
             break;
         case 'button1-text':
             $(".popup-button1").val($(this).val());
@@ -216,27 +394,74 @@ $("input").on('change keyup', function(){
         case 'button1-url':
             $(".popup-form").attr('action', $(this).val());
             break;
+        case 'image-url':
+            let prevUrl = $('.popup-image-full img').attr('src');
+            let newUrl = $(this).val();
+            settings.image.image_url = newUrl;
+            settings.image.image_data = undefined;
+            var img = $('.popup-image')[0];
+            img.src = newUrl;
+            break;
+        case 'product1_url':
+            setProduct($(this).val(), 0);
+            break;
+        case 'product2_url':
+            setProduct($(this).val(), 1);
+            break;
+        case 'product3_url':
+            setProduct($(this).val(), 2);
+            break;
+        case 'form-url':
+            console.log('form-url');
+            scrapeGoogleForm($(this).val());
+            break;
+        case 'subtitle-color':
+            $(".popup-subtitle").attr('style', 'color: #' + $(this).val());
+            break;
+        case 'title-color':
+            $(".popup-title").attr('style', 'color: #' + $(this).val());
+            break;
+        case 'description-color':
+            $(".popup-description").attr('style', 'color: #' + $(this).val());
+            break;
         case 'button1-color':
             $(".popup-button1").attr('style', 'color: #' + $(this).val());
             break;
         case 'button1-background':
             $(".popup-button1").attr('style', 'background: #' + $(this).val());
             break;
-        case 'image-url':
-            let prevUrl = $('.popup-image-full img').attr('src');
-            let newUrl = $(this).val();
-            $('.popup-image').attr('src', $(this).val());
+    }
+});
+$("input").on('change', function(){
+    switch($(this).attr('id')){
+        case 'subtitle-color':
+            $(".popup-subtitle").attr('style', 'color: #' + $(this).val());
+            break;
+        case 'title-color':
+            $(".popup-title").attr('style', 'color: #' + $(this).val());
+            break;
+        case 'description-color':
+            $(".popup-description").attr('style', 'color: #' + $(this).val());
+            break;
+        case 'button1-color':
+            $(".popup-button1").attr('style', 'color: #' + $(this).val());
+            break;
+        case 'button1-background':
+            $(".popup-button1").attr('style', 'background: #' + $(this).val());
             break;
         case 'image-path':
             if(this.files && this.files[0]){
-                let reader = new FileReader();
-                let filename = this.files[0].name;
-                reader.onload = function(e) {
+                var file = this.files[0];
+                convertFileToBase64(file, function (filename, base64) {                    
                     $('#image-url').val(filename);
-                    $('.popup-image-full').html("");
-                    $('.popup-image-full').append("<img style='max-width: 100%; max-height: 360px;' src='" + e.target.result + "'/>");
-                }
-                reader.readAsDataURL(this.files[0]);
+                    $img = $('.popup-image-full img')[0];
+                    $img.src = base64;
+                    convertImgToBase64($img, function (data) {
+                        $img.src = data;
+                        settings.image.image_url = file.path;
+                        settings.image.image_data = data;
+                    })
+                })
             }
             break;
         case 'image-position':
@@ -278,76 +503,310 @@ $("input").on('change keyup', function(){
             break;
         case 'form-width':
             if($(this).val() == '50'){
-                $('form .popup-field').removeClass('w-input field-50');
+                $('form .popup-field').removeClass('field-style-2 w-input');
                 $('form .popup-field').addClass('field-50');
+                console.log('width-50');
             }else{
-                $('form .popup-field').removeClass('w-input field-50');
-                $('form .popup-field').addClass('w-input');
+                $('form .popup-field').removeClass('field-50');
+                $('form .popup-field').addClass('field-style-2 w-input');
+                console.log('width-100');
             }
-            break;
-        case 'product1_url':
-            console.log(setProduct($(this).val()));
             break;
         default:
             break;
     }
 })
+function copyToClipboard(element) {
+  var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val(settings.exportCode).select();
+  document.execCommand("copy");
+  $temp.remove();
+}
+
 /*   -Modifying settings end-   */
 $('#image-upload').on('click', function() {
     $('#image-path').click();
 })
 /*   -Generate code-   */
 $("#generate-code").click(function(){
-    settings = {
-        "text" : {
-            "subtitle_text"         : $("#subtitle-text").val(),
-            "subtitle_color"        : $("#subtitle-color").val(),
-            "title_text"            : $("#title-text").val(),
-            "title_color"           : $("#title-color").val(),
-            "description_text"      : $("#description-text").val(),
-            "description_color"     : $("#description-color").val()
-        },
-        "countdown" : {
-            "countdown_value"       : $("#countdown-value").val()
-        },
-        "form" : {
-            "form_url"              : $("#form-url").val(),
-            "form_width"            : $("input[name='form-width']:checked").val()
-        },
-        "products" : {
-            "product1_url"          : $("#product1_url").val(),
-            "product2_url"          : $("#product2_url").val(),
-            "product3_url"          : $("#product3_url").val(),
-        },
-        "buttons" : {
-            "button1_text"          : $("#button1-text").val(),
-            "button1_url"           : $("#button1-url").val(),
-            "button1_color"         : $("#button1-color").val(),
-            "button1_background"    : $("#button1-background").val(),
-            "button2_text"          : $("#button2-text").val(),
-            "button2_url"           : $("#button2-url").val(),
-            "button2_color"         : $("#button2-color").val(),
-            "button2_background"    : $("#button2-background").val(),
-        },
-        "image" : {
-            "image_url"             : $("#image-url").val(),
-            "image_content"         : "",
-            "image_position"        : $("input[name='image-position']:checked").val()
-        },
-        "animations" : {
-            "popup_type"            : $("#popup-type").val(),
-            "popup_delay"           : $("#popup-delay").val(),
-            "popup_position"        : $("#popup-position").val(),
-            "popup_animation"       : $("#popup-animation").val(),
-            "popup_auto"            : $("#popup-auto").val()
-        },
-        "advanced" : {
-            "popup_class"           : $("#popup-class").val(),
-            "popup_overlay"         : $("input[name='overlay']:checked").val(),
-            "popup_mobile"          : $("input[name='mobile']:checked").val(),
-            "popup_cancel"          : $("#popup-cancel").val(),
-            "popup_cancel_position" : $("#popup-cancel-position").val(),
+    getSettings();
+
+    var code = generateCode('div.test .popup-container img', function (code) {
+        var text = code;
+        if (text.length > CONFIG.max_code_length) {
+            text = text.substr(0, text.lastIndexOf(' ', CONFIG.max_code_length - 3)) + '...';
+        }
+        $('.snippetcode').text(text);
+        settings.exportCode = code;
+    });
+});
+$('.copyCode').click(function(){
+    copyToClipboard('.snippetcode');
+
+    var $this = $(this);
+    var originalText = $this.text();
+    $this.text('CODE COPIED!').addClass('active');
+    setTimeout(function () {
+        $this.text(originalText).removeClass('active');
+    }, 2000);
+});
+/*   -Generate code end-   */
+ 
+//Google form
+// let accept = true; // accept only one time for valid google form url
+// $('#field-googleFormUrl').on('keyup', function(){
+//     $(".form-warning").html("");
+//     $('.ajax-script').hide();
+//     formCode = [];
+//     let formURL = $(this).val();
+//     $('.google-form form').html("");
+//     if(formURL.indexOf('https://docs.google.com/forms') != -1){
+//         if(accept){
+//             $('.response-form').remove();
+//             $('.form-elements').html('');
+//             $('.loader').show();
+//             $('body').addClass('loading');
+//             $.ajax({
+//                 url: '/googleFormHandle',
+//                 data: {
+//                     "_token": $('#csrf-token').val(),
+//                     "url": formURL
+//                 },
+//                 type: 'post',
+//                 success: function(res){
+//                     $('.loader').hide();
+//                     $('body').removeClass('loading');
+//                     if(res.status == 'success'){
+//                         $('#generator').append(res.data);
+//                         googleFormGenerate();
+//                     }else{
+//                         $(".form-warning").html("This form is private and we're unable to render it. Please make it public and try again.");
+//                     }
+//                 }
+//             });
+//         }
+//         accept = false;
+//     }else{
+//         accept = true;
+//         $('.google-form').hide();
+//         $('.google-form-code').hide();
+//         $('.action-buttons').show();
+//     }
+// })
+
+function scrapeUrl(url, callback) {
+    var xhr=null;
+    try
+    {
+        xhr = new XMLHttpRequest(); 
+    } 
+    catch(e)
+    { 
+        try { xhr = new ActiveXObject("Msxml2.XMLHTTP"); } 
+        catch (e2)
+        { 
+            try { xhr = new ActiveXObject("Microsoft.XMLHTTP"); } 
+            catch (e) {}
         }
     }
-})
-/*   -Generate code end-   */
+
+    xhr.onload = function() {
+        callback(xhr.response);
+    };
+    // var providers = ['https://cors-anywhere.herokuapp.com/', 'https://crossorigin.me/']
+    xhr.open("GET", `https://cors-anywhere.herokuapp.com/${url}`, true);           
+    xhr.setRequestHeader('Content-Type', 'text/html');
+    xhr.send(null);
+}
+
+function scrapeProduct(url, idx)
+{
+    scrapeUrl(url, function (data) {
+        var prod = getProductInfo(data);
+        applyProducInfo(prod, idx);
+    });
+
+}
+
+function getProductInfo(htmlString) {
+    var el = document.createElement( 'html' );  
+    el.innerHTML = htmlString;
+    var title = el.querySelector('.entry-summary .product_title').innerText;
+    var price = el.querySelector('.entry-summary .price').innerText;
+    var imgUrl = el.querySelector('.woocommerce-product-gallery__wrapper img').src;
+    return {"title": title, "price": price, "imgUrl": imgUrl};
+}
+
+function applyProducInfo(prod, idx) {
+    var title = prod.title;
+    var price = prod.price;
+    var imgUrl = prod.imgUrl;
+    if (title != null & price != null && imgUrl != null) {
+        $('.popup-product-name:eq('+idx+')').text(title);
+        $('.old-price:eq('+idx+')').text(price);
+        $('.new-price:eq('+idx+')').text(price);
+        $('.popup-product-image:eq('+idx+')').attr('src', imgUrl);
+    }
+}
+
+//Google Form
+function scrapeGoogleForm(url)
+{
+    scrapeUrl(url, function (data) {
+        var formData = getFormData(data);
+        applyGoogleForm(formData);
+    });
+
+}
+
+function getFormData(htmlString) {
+    var el = document.createElement( 'html' );
+    el.innerHTML = htmlString;
+    var elForm = el.querySelector('form');
+    var formAction = elForm.action;
+    var formMethod = elForm.method;
+    var formTitle = elForm.querySelector('.freebirdFormviewerViewHeaderTitle') ? elForm.querySelector('.freebirdFormviewerViewHeaderTitle').innerText : '';
+   
+    var FormviewerViewHeaderRequiredLegend = elForm.querySelector('.freebirdFormviewerViewHeaderRequiredLegend') ? elForm.querySelector('.freebirdFormviewerViewHeaderRequiredLegend').innerText : '';
+
+    var mainFieldListContainers = elForm.querySelectorAll('.freebirdFormviewerViewItemList .freebirdFormviewerViewItemsItemItem ');
+    var mainFieldList = [];
+
+    mainFieldListContainers.forEach(fieldWrapper => {
+        let fieldLabel = fieldWrapper.querySelector('.freebirdFormviewerViewItemsItemItemTitle').innerText;
+        let fieldInputArea = fieldWrapper.querySelector('.exportContentArea');
+        if (fieldInputArea != null) {
+            let fieldInput = fieldInputArea.querySelector('input') ? fieldInputArea.querySelector('input') : fieldInputArea.querySelector('textarea') ? fieldInputArea.querySelector('textarea') : null;
+            let placeholder = fieldWrapper.querySelector('.exportLabel') ? fieldWrapper.querySelector('.exportLabel').innerText : '';
+            let fieldName = fieldInput.name;
+            mainFieldList.push({fieldName, fieldLabel, fieldInput, placeholder});
+        }
+    })
+
+    var navigationNavControlsWrapper = elForm.querySelector('.freebirdFormviewerViewNavigationNavControls');
+    var freebirdFormviewerViewHeaderDescription = elForm.querySelector('.freebirdFormviewerViewHeaderDescription') ? elForm.querySelector('.freebirdFormviewerViewHeaderDescription').innerText: '';
+
+    var submitButtonLabel = navigationNavControlsWrapper.querySelector('.freebirdFormviewerViewNavigationButtons .exportLabel').innerText;
+
+    var hiddenFields = [];
+
+    elForm.querySelectorAll('input[type="hidden"]').forEach(item => {
+        hiddenFields.push(item);
+    });
+    
+    return {
+        "action": formAction,
+        "method": formMethod,
+        "title": formTitle,
+        "requireLegend": FormviewerViewHeaderRequiredLegend,
+        "mainFields": mainFieldList,
+        "sub_title": freebirdFormviewerViewHeaderDescription,
+        "submit": submitButtonLabel,
+        "hiddenFields": hiddenFields
+    };
+    // return {formAction, formMethod, formTitle, FormviewerViewHeaderRequiredLegend, mainFieldList, freebirdFormviewerViewHeaderDescription, submitButtonLabel, hiddenFields};
+}
+
+function applyGoogleForm(formData) {
+    var widthClz = ' field-style-2 w-input';
+    if ($('#form-width:checked').val() == '50')
+        widthClz = ' field-50';
+
+    settings.text.title_text = formData.title;
+    settings.text.description_text = formData.sub_title;
+    settings.buttons.button1_text = formData.submit;
+
+    var mainFieldList = formData.mainFields;
+    var html = '';
+    for (var i = 0; i < mainFieldList.length; i++) {
+        var field = mainFieldList[i];
+        html = html + `<input type="text" class="popup-field ${widthClz}" maxlength="256" name="${field.fieldName}" data-name="${field.fieldName}" id="${field.fieldName}" placeholder="${field.fieldLabel}">` + "\n";
+    }
+    html = html + `<input type="submit" value="" data-wait="Please wait..." class="popup-main-button w-button popup-button1">`;
+
+    $frm = $('form');
+    $frm.html(html);
+    $frm.attr('action', formData.action);
+    $frm.attr('method', formData.method);
+
+    applyFormSetting();
+    populateSettings();
+
+    return html;
+}
+
+//Form generator
+function googleFormGenerate(){
+    formAction = $('form').attr('action');
+    let formTitle = $('form').find('.exportFormTitle').html();
+    let elements = [];
+    for(let element of $("[role='listitem']")){
+        let placeholder = $(element).find('.freebirdFormviewerViewItemsItemItemTitle').text();
+        let tag = $(element).find('.exportContentArea').children().prop("tagName");
+        let name;
+        let type;
+        if(tag == "DIV"){
+            name = $(element).find('.exportContentArea').children().children().attr('name');
+            tag = $(element).find('.exportContentArea').children().children().prop("tagName");
+            type = $(element).find('.exportContentArea').children().children().attr('type')
+        }else{
+            name = $(element).find('.exportContentArea').children().attr('name');
+        }
+        if(tag == undefined){
+            $(".form-warning").html("This form is private and we're unable to render it. Please make it public and try again.");
+        }else{
+            elements.push({
+                'placeholder': placeholder,
+                'tag': tag,
+                'name': name,
+                'type': type
+            });
+        }
+    }
+    if(elements.length > 0){
+        $('.response-form').css('display', 'none');
+        $('.google-form').show();
+        $('.google-form-code').show();
+        $('.action-buttons').hide();
+        $('.form-elements').text("");
+        for(let element of elements){
+            switch(element.tag){
+                case 'INPUT':
+                    let input = "";
+                    if(element.placeholder.indexOf("*") > 0){
+                        input = "<" + element.tag + ' name="' + element.name + '" placeholder="' + element.placeholder + '" type="' + element.type + '" class="google-input" required/>';
+                    }else{
+                        input = "<" + element.tag + ' name="' + element.name + '" placeholder="' + element.placeholder + '" type="' + element.type + '" class="google-input" />';
+                    }
+                    $('.google-form form').append($(input));
+                    let inputCode = "";
+                    inputCode = "$('<input name=\"" + element.name + "\" placeholder=\"" + element.placeholder + "\" type=\"" + element.type + "\" class=\"google-input-field\"/>').appendTo('#smForm-1');";
+                    formCode.push(inputCode);
+                    //$('.form-elements').text($('.form-elements').text() + inputCode);
+                    break;
+                case 'TEXTAREA':
+                    let textarea = "<" + element.tag + ' name="' + element.name + '" placeholder="' + element.placeholder + '" type="' + element.type + '" class="google-input"/>';
+                    $('.google-form form').append($(textarea));
+                    let textCode = "";
+                    textCode = "$('<textarea name=\"" + element.name + "\" placeholder=\"" + element.placeholder + "\"  class=\"google-input-field\"></textarea>').appendTo('#smForm-1');";
+                    formCode.push(textCode);
+                    //$('.form-elements').text($('.form-elements').text() + textCode);
+                    break;
+                default:
+                    break;
+            }
+        }
+        let submit = "<input type='submit' class='send' value='" + $("#field-buttonText").val() + "' style='background-color: #" + $('#field-buttonPrimaryColor').val() + "'/>";
+        let cancel = "<input type='button' class='cancel' value='" + $("#field-buttonSecondaryText").val() + "' style='background-color: #" + $('#field-buttonSecondaryColor').val() + "'/>";
+
+        $('.google-form form').append($(submit));
+        $('.google-form form').append($(cancel));
+        
+        $('.form-title').html(formTitle);
+        $('.form-action').html(formAction);
+        $('.ajax-script').show();
+        //$('.google-form form').attr('action', formAction);
+        $('.google-form .form-title').html(formTitle);
+    }
+        }

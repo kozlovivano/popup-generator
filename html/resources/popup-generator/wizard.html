@@ -103,53 +103,53 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
             </div>
             <div class="first-templates">
-                <a href="popup-1.html" class="centertxt w-inline-block">
+                <!-- <a href="popup.html?kind=1" class="centertxt w-inline-block">
                     <img src="images/popup-1.png" sizes="(max-width: 479px) 32vw, (max-width: 767px) 30vw, 31vw" alt="" class="template-image">
                     <h3 class="marginbottom2">Gift card promotion</h3>
                     <p>Collect information</p>
                 </a>
-                <a href="popup-4.html" class="centertxt w-inline-block">
+                <a href="popup.html?kind=4" class="centertxt w-inline-block">
                     <img src="images/popup-4.png" sizes="(max-width: 479px) 32vw, (max-width: 767px) 30vw, 31vw" alt="" class="template-image">
                     <h3 class="marginbottom2">Gift card promotion</h3>
                     <p>Collect information</p>
                 </a>
-                <a href="popup-7.html" class="centertxt w-inline-block">
+                <a href="popup.html?kind=7" class="centertxt w-inline-block">
                     <img src="images/popup-7.png" sizes="(max-width: 479px) 32vw, (max-width: 767px) 30vw, 31vw" alt="" class="template-image">
                     <h3 class="marginbottom2">Gift card promotion</h3>
                     <p>Collect information</p>
                 </a>
-                <a href="popup-2.html" class="centertxt w-inline-block">
+                <a href="popup.html?kind=2" class="centertxt w-inline-block">
                     <img src="images/popup-2.png" sizes="(max-width: 479px) 32vw, (max-width: 767px) 30vw, 31vw" alt="" class="template-image">
                     <h3 class="marginbottom2">Gift card promotion</h3>
                     <p>Collect information</p>
                 </a>
                 
-                <a href="popup-8.html" class="centertxt w-inline-block">
+                <a href="popup.html?kind=8" class="centertxt w-inline-block">
                     <img src="images/popup-8.png" sizes="(max-width: 479px) 32vw, (max-width: 767px) 30vw, 31vw" alt="" class="template-image">
                     <h3 class="marginbottom2">Gift card promotion</h3>
                     <p>Collect information</p>
                 </a>
-                <a href="popup-6.html" class="centertxt w-inline-block">
+                <a href="popup.html?kind=6" class="centertxt w-inline-block">
                     <img src="images/popup-6.png" sizes="(max-width: 479px) 32vw, (max-width: 767px) 30vw, 31vw" alt="" class="template-image">
                     <h3 class="marginbottom2">Gift card promotion</h3>
                     <p>Collect information</p>
                 </a>
-                <a href="popup-3.html" class="centertxt w-inline-block">
+                <a href="popup.html?kind=3" class="centertxt w-inline-block">
                     <img src="images/popup-3.png" sizes="(max-width: 479px) 32vw, (max-width: 767px) 30vw, 31vw" alt="" class="template-image">
                     <h3 class="marginbottom2">Gift card promotion</h3>
                     <p>Collect information</p>
                 </a>
-                <a href="popup-5.html" class="centertxt w-inline-block">
+                <a href="popup.html?kind=5" class="centertxt w-inline-block">
                     <img src="images/popup-5.png" sizes="(max-width: 479px) 32vw, (max-width: 767px) 30vw, 31vw" alt="" class="template-image">
                     <h3 class="marginbottom2">Gift card promotion</h3>
                     <p>Collect information</p>
                 </a>
                 
-                <a href="popup-9.html" class="centertxt w-inline-block">
+                <a href="popup.html?kind=9" class="centertxt w-inline-block">
                     <img src="images/popup-9.png" sizes="(max-width: 479px) 32vw, (max-width: 767px) 30vw, 31vw" alt="" class="template-image">
                     <h3 class="marginbottom2">Gift card promotion</h3>
                     <p>Collect information</p>
-                </a>
+                </a> -->
             </div>
         </div>
     </div>
@@ -158,6 +158,16 @@
     </div>
     <script src="https://d1tdp7z6w94jbb.cloudfront.net/js/jquery-3.3.1.min.js" type="text/javascript" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="../../js/twik-v3.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var PAGES = [1, 4,7, 2, 8, 6, 3, 5, 9];
+            var html = "";
+            for (var i = 0; i < PAGES.length; i++) {
+                html = html + '<a href="popup.html?kind=PAGE_NO" class="centertxt w-inline-block"> <img src="images/popup-PAGE_NO.png" sizes="(max-width: 479px) 32vw, (max-width: 767px) 30vw, 31vw" alt="" class="template-image"><h3 class="marginbottom2">Gift card promotion</h3><p>Collect information</p> </a>'.replace(/PAGE_NO/g, PAGES[i]) + "\n";
+            }
+            $('.first-templates').html(html);
+        });
+    </script>
     <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
 </body>
 

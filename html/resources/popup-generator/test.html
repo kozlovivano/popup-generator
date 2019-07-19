@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--  Last Published: Tue Jun 18 2019 12:36:49 GMT+0000 (UTC)  -->
+<html data-wf-page="5d0752128518927d140033ab" data-wf-site="5b27ad71f471c80738d206f5">
+
+<head>
+    <meta charset="utf-8">
+    <title>Popup-Test</title>
+    <meta content="popup-test" property="og:title">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="../../css/normalize.css" rel="stylesheet" type="text/css">
+    <link href="../../css/components.css" rel="stylesheet" type="text/css">
+    <link href="../../css/twik-v3.css" rel="stylesheet" type="text/css">
+    <link href="../../css/slick.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        .subscribecta {
+            display: inline-block;
+            background-color: #914C53;
+            color: #FFF !important;
+            padding: 5px 10px;
+            vertical-align: middle;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: 5px 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <button id="test" class="subscribecta">Try it!</button>
+        <br/>
+        <textarea id="snapcode" cols="120" rows="10"></textarea>
+    </div>
+    <div class="regularsection _100vh">
+    </div>
+    <script src="../../js/jquery.js" type="text/javascript"></script>
+    <script src="../../js/twik-v3.js" type="text/javascript"></script>
+    <script src="../../js/jscolor.js" type="text/javascript"></script>
+    <script src="../../js/slick.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var testWithSnapCode = function (snapcode) {
+            eval(snapcode);
+        }
+
+        $('#test').click( function () {
+            var code = $('#snapcode').val();
+            if (code == '') {
+                var sandbox = $('#snapcode').val('').select();
+                if (document.execCommand("Paste")) {
+                    code = sandbox.val();
+                    console.log(code);
+                } else {
+                    console.log('fail');
+                    return;
+                }
+            }
+            testWithSnapCode(code);
+        })
+    </script>
+</body>
+</html>
