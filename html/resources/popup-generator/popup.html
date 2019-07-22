@@ -15,6 +15,19 @@
         div.test {
             display: none;
         }
+        div.error {
+            color: orangered;
+            font-size: smaller;
+        }
+        .product1-div div.error {            
+            margin-top: -20px;
+        }
+        .product2-div div.error {            
+            margin-top: -20px;
+        }
+        .product3-div div.error {            
+            margin-top: -20px;
+        }
     </style>
     <script type="text/javascript">
         try {
@@ -191,6 +204,7 @@
                                     </div>
                                     <div class="product1-div">
                                         <input type="text" class="text-field-4 w-input" placeholder="Product URL" id="product1_url">
+                                        <div class="error"></div>
                                     </div>
                                 </div>
                                 <div class="marginbottom24 w30tab w-clearfix">
@@ -499,7 +513,7 @@ function getAllUrlParams(url) {
 }
         var kind = getAllUrlParams().kind;
         var templates = [
-            '<div class="relativepopup"><div id="popup-container" class="popup-container" data-sm-init="true" data-state="success"><div class="popup-half-column"><div class="popup-subtitle"></div><div class="popup-title"></div><p class="popup-description"></p><div class="popup-form-block"><form class="form popup-form"> <input type="text" class="popup-field field-50" maxlength="256" name="name" data-name="Name" placeholder="Name" id="name"> <input type="email" class="popup-field field-50" maxlength="256" name="email" data-name="email" placeholder="Email" id="email"> <input type="submit" value="" data-wait="Please wait..." class="popup-button1"></form><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div><div class="popup-half-column popup-image-full"><img class="popup-image" src="" alt=""></div></div></div>',
+            '<div class="relativepopup"><div id="popup-container" class="popup-container" data-sm-init="true" data-state="success"><div class="popup-half-column"><div class="popup-subtitle"></div><div class="popup-title"></div><p class="popup-description"></p><div class="popup-form-block"><div class="popup-countdown"><div class="popup-countdown-box"><div class="popup-countdown-number popup-hours">01</div><p>Hours</p></div><div class="popup-countdown-box"><div class="popup-countdown-number popup-minutes">38</div><p>Minutes</p></div><div class="popup-countdown-box"><div class="popup-countdown-number popup-seconds">56</div><p>Seconds</p></div></div><form class="form popup-form"> <input type="text" class="popup-field field-50" maxlength="256" name="name" data-name="Name" placeholder="Name" id="name"> <input type="email" class="popup-field field-50" maxlength="256" name="email" data-name="email" placeholder="Email" id="email"> <input type="submit" value="" data-wait="Please wait..." class="popup-button1"></form><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div><div class="popup-half-column popup-image-full"><img class="popup-image" src="" alt=""></div></div></div>',
             '<div class="relativepopup"><div id="popup-container" class="popup-container" data-sm-init="true" data-state="success"><div class="popup-half-column text-align-left"><div class="popup-subtitle"></div><div class="popup-title"></div><p class="popup-description"></p><div class="popup-form-block w-form"><form id="email-form" name="email-form" data-name="Email Form" class="form"> <input type="text" class="popup-field field-style-2 w-input" maxlength="256" name="name" data-name="Name" placeholder="Name" id="name"> <input type="text" class="popup-field field-style-2 w-input" maxlength="256" name="email" data-name="email" placeholder="Email" id="email"> <input type="submit" value="" data-wait="Please wait..." class="popup-main-button w-button popup-button1"></form><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div><div class="popup-half-column popup-image-full"><img class="popup-image" src="" alt=""></div></div></div>',
             '<div class="relativepopup"><div id="popup-container" class="popup-container" data-sm-init="true" data-state="success"><div class="popup-half-column"><img src="./images/email-64.png" alt="" class="subtitle-image"><div class="popup-subtitle"></div><div class="popup-title"></div><p class="popup-description"></p><div class="popup-form-block w-form"><form id="email-form" name="email-form" data-name="Email Form" class="form"> <input type="text" class="popup-field field-style-2 w-input" maxlength="256" name="email" data-name="email" placeholder="Email" id="email"> <input type="submit" data-wait="Please wait..." class="popup-main-button w-button popup-button1"></form><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div></div></div>',
             '<div class="relativepopup"><div id="popup-container" class="popup-container has-background-image" data-sm-init="true" data-state="success"><div class="popup-half-column"><div class="popup-subtitle custom-color"></div><div class="popup-title bigger-title custom-color lighter-headlines"></div><p class="popup-description popup-white-color-text"></p><div class="popup-form-block w-form"><form id="email-form" name="email-form" data-name="Email Form" class="form"> <input type="text" class="popup-field field-style-2 w-input" maxlength="256" name="email" data-name="email" placeholder="Email" id="email"> <input type="submit" value="Free laptop? I&#x27;m In!" data-wait="Please wait..." class="popup-main-button customize-color w-button popup-button1"></form><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div><div class="popup-half-column popup-image-full"><img class="popup-image" src="" alt=""></div></div></div>',
@@ -526,6 +540,7 @@ function getAllUrlParams(url) {
                     "description_color"     : "686868",
                 },
                 "countdown" : {
+                    "attached"              : false,
                     "countdown_value"       : "",
                 },
                 "form" : {
@@ -577,6 +592,7 @@ function getAllUrlParams(url) {
                     "description_color"     : "686868",
                 },
                 "countdown" : {
+                    "attached"              : false,
                     "countdown_value"       : "",
                 },
                 "form" : {
@@ -628,6 +644,7 @@ function getAllUrlParams(url) {
                     "description_color"     : "686868",
                 },
                 "countdown" : {
+                    "attached"              : false,
                     "countdown_value"       : "",
                 },
                 "form" : {
@@ -679,6 +696,7 @@ function getAllUrlParams(url) {
                     "description_color"     : "ffffff",
                 },
                 "countdown" : {
+                    "attached"              : false,
                     "countdown_value"       : "",
                 },
                 "form" : {
@@ -730,6 +748,7 @@ function getAllUrlParams(url) {
                     "description_color"     : "686868",
                 },
                 "countdown" : {
+                    "attached"              : false,
                     "countdown_value"       : "",
                 },
                 "form" : {
@@ -781,6 +800,7 @@ function getAllUrlParams(url) {
                     "description_color"     : "686868",
                 },
                 "countdown" : {
+                    "attached"              : false,
                     "countdown_value"       : "",
                 },
                 "form" : {
@@ -832,6 +852,7 @@ function getAllUrlParams(url) {
                     "description_color"     : "686868",
                 },
                 "countdown" : {
+                    "attached"              : false,
                     "countdown_value"       : "",
                 },
                 "form" : {
@@ -883,6 +904,7 @@ function getAllUrlParams(url) {
                     "description_color"     : "",
                 },
                 "countdown" : {
+                    "attached"              : false,
                     "countdown_value"       : "",
                 },
                 "form" : {
@@ -934,6 +956,7 @@ function getAllUrlParams(url) {
                     "description_color"     : "686868",
                 },
                 "countdown" : {
+                    "attached"              : false,
                     "countdown_value"       : "",
                 },
                 "form" : {

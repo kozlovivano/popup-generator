@@ -25,7 +25,16 @@ var applyFormSetting = function() {
 
 var setSettings = function(){
     applyFormSetting();
-    
+
+    var date = new Date();
+    $("#countdown-value").attr('min', dateString(date));
+    if (settings.countdown.countdown_value == '') {
+        date.setDate(date.getDate() + 1);
+        settings.countdown.countdown_value = dateString(date);
+    }
+    $("#countdown-value").val(settings.countdown.countdown_value);
+    $("#countdown-value").change();
+
     $("#countdown-value").val(settings.countdown.countdown_value);
     $("#form-url").val(settings.form.form_url);
     //$("input[name='form-width']:checked").val()
@@ -324,19 +333,20 @@ var setProduct = function(url, idx){
         console.log('response header', headers)
     }, 3000);
 }
+
+function formatting(target) {
+  return target < 10 ? '0' + target : target;
+}
+
+function dateString(date) {
+    var dd = formatting(date.getDate());
+    var mm = formatting(date.getMonth()+1); //January is 0!
+    var yyyy = date.getFullYear();
+    var str = yyyy + "-" + mm + "-" + dd;
+    return str
+}
+
 $(document).ready(function(){
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-    if(dd<10){
-        dd='0'+dd;
-    } 
-    if(mm<10){
-        mm='0'+mm;
-    } 
-    today = yyyy + "-" + mm + "-" + dd;
-    $("#countdown-value").attr('min', today);
     
     /*  -Switch button check-  */
     for(var item of $('input[name$="-switch"]:checked')){
@@ -478,7 +488,7 @@ $("input").on('change', function(){
             break;
         case 'countdown-value':
             clearInterval(x);
-            var countDownDate = new Date($(this).val()).getTime();
+            var countDownDate = new Date($(this).val()+ ' 00:00:00').getTime();
             x = setInterval(function() {
                 // Get today's date and time
                 var now = new Date().getTime();
@@ -491,9 +501,15 @@ $("input").on('change', function(){
                 var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                $(".popup-hours").html(hours + days * 24);
-                $(".popup-minutes").html(minutes);
-                $(".popup-seconds").html(seconds);
+                var hh = hours + days * 24;
+                if (hh > 100) {
+                    hh = 99;
+                    minutes = 59;
+                    seconds = 59;
+                }
+                $(".popup-hours").html(hh);
+                $(".popup-minutes").html(formatting(minutes));
+                $(".popup-seconds").html(formatting(seconds));
                 // If the count down is finished, write some text 
                 if (distance < 0) {
                     clearInterval(x);
@@ -620,22 +636,123 @@ function scrapeUrl(url, callback) {
     xhr.send(null);
 }
 
+function displayProductErr(idx, err) {
+    var msg = '';
+    if (err != undefined) {
+        console.log(err.message);
+        msg = 'There was error loading the product.';
+    }
+    $(`.product${idx+1}-div .error`).text(msg);
+}
+
 function scrapeProduct(url, idx)
 {
-    scrapeUrl(url, function (data) {
-        var prod = getProductInfo(data);
-        applyProducInfo(prod, idx);
-    });
+    try {
+        scrapeUrl(url, function (data) {
+            try {
+                console.log('scrapped!');
+                var prod = getProductInfo(data);
+                applyProducInfo(prod, idx);
+                displayProductErr(idx)
+            }
+            catch(err) {
+                displayProductErr(idx, err);
+            }
+        });
+    }
+    catch(err) {
+        displayProductErr(idx, err);
+    }
+}
 
+function formatCurrency(name, value) {
+    if (value === undefined) return '';
+    const def = '$';
+    var currency_symbols = {
+        'USD': '$', // US Dollar
+        'EUR': '€', // Euro
+        'CRC': '₡', // Costa Rican Colón
+        'GBP': '£', // British Pound Sterling
+        'ILS': '₪', // Israeli New Sheqel
+        'INR': '₹', // Indian Rupee
+        'JPY': '¥', // Japanese Yen
+        'KRW': '₩', // South Korean Won
+        'NGN': '₦', // Nigerian Naira
+        'PHP': '₱', // Philippine Peso
+        'PLN': 'zł', // Polish Zloty
+        'PYG': '₲', // Paraguayan Guarani
+        'THB': '฿', // Thai Baht
+        'UAH': '₴', // Ukrainian Hryvnia
+        'VND': '₫', // Vietnamese Dong
+    };
+
+    var currency_name = 'INR';
+
+    if(currency_symbols[name]!==undefined) {
+        return currency_symbols[name] + ' ' + value;
+    } else {
+        return def + ' ' + value;
+    }
 }
 
 function getProductInfo(htmlString) {
-    var el = document.createElement( 'html' );  
-    el.innerHTML = htmlString;
-    var title = el.querySelector('.entry-summary .product_title').innerText;
-    var price = el.querySelector('.entry-summary .price').innerText;
-    var imgUrl = el.querySelector('.woocommerce-product-gallery__wrapper img').src;
-    return {"title": title, "price": price, "imgUrl": imgUrl};
+    var products = [];
+    const regex = /(?:(?:<!--JSON-LD data generated by ([\w\s]+)-->)?\s*<script type="application\/ld\+json">)([\s{}"@:.,\[\]\-&#'\!;\/\\﻿%?=\w]*)(?:<\/script>)/gm;
+    const str = htmlString;
+    let m;
+    while ((m = regex.exec(str)) !== null) {
+        // This is necessary to avoid infinite loops with zero-width matches
+        if (m.index === regex.lastIndex) {
+            regex.lastIndex++;
+        }
+        
+        // console.log(m);
+        const idxLd = 2;
+        var jsonLd = JSON.parse(m[idxLd]);
+        // console.log(m.index, m[1], jsonLd['@type'], jsonLd);
+        var graphs = [];
+        if (jsonLd['@type'] === undefined) {
+            graphs = jsonLd['@graph'];
+        } else {
+            graphs = [jsonLd];
+        }
+        for (graph of graphs) {
+            if (graph['@type'] != 'Product') continue;
+            // console.log(m.index, m[1], jsonLd['@type'], jsonLd);
+            var info = {
+                "title": graph.name, 
+                "description": graph.description, 
+                "imgUrl": graph.image, 
+                "price2": graph.offers[0].price, 
+                "lowPrice": graph.offers[0].lowPrice, 
+                "highPrice": graph.offers[0].highPrice, 
+                "priceCurrency": graph.offers[0].priceCurrency 
+            };
+            if (info.price2 === undefined) {
+                info["price"] = formatCurrency(info.priceCurrency, info.lowPrice) + ' - ' + formatCurrency(info.priceCurrency, info.highPrice);
+            } else {
+                info["price"] =  formatCurrency(info.priceCurrency, info.price2);
+            }
+            info["len"] = Object.keys(info).length;
+            products.push(info);
+        }
+
+        // The result can be accessed through the `m`-variable.
+        // m.forEach((match, groupIndex) => {
+        //     if (groupIndex == 0) return;
+        //     // console.log(`Found match, group ${groupIndex}: ${match}`);
+        // });
+    }
+    var prodIdx = 0, max = 0;
+    for (var i = products.length - 1; i >= 0; i--) {
+        var prod = products[i];
+        if (max < prod.len) {
+            max = prod.len;
+            prodIdx = i;
+        }
+    }
+    console.log(products[prodIdx]);
+    return products[prodIdx];
 }
 
 function applyProducInfo(prod, idx) {
