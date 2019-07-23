@@ -152,8 +152,8 @@
                                 <div class="marginbottom24 w30tab w-clearfix">
                                     <label class="nomarginbottom inlinetext">Countdown</label>
                                     <div class="switch switch--horizontal">
-                                        <input type="radio" value="false" name="countdown-switch" checked="checked"/>
-                                        <input type="radio" value="true" name="countdown-switch"/>
+                                        <input type="radio" value="false" name="countdown-switch" checked="checked" id="countdown-switch"/>
+                                        <input type="radio" value="true" name="countdown-switch" id="countdown-switch"/>
                                         <span class="toggle-outside"><span class="toggle-inside"></span></span>
                                     </div>
                                     <div class="countdown-div">
@@ -512,16 +512,29 @@ function getAllUrlParams(url) {
   return obj;
 }
         var kind = getAllUrlParams().kind;
+        var htmlTemplates = {
+            'countdown': '<div class="popup-countdown"><div class="popup-countdown-box"><div class="popup-countdown-number popup-hours">01</div><p>Hours</p></div><div class="popup-countdown-box"><div class="popup-countdown-number popup-minutes">38</div><p>Minutes</p></div><div class="popup-countdown-box"><div class="popup-countdown-number popup-seconds">56</div><p>Seconds</p></div></div>',
+            'emptyForm': '<div class="popup-form-block w-form"><form id="email-form" name="email-form" data-name="Email Form" class="form"></form><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div>',
+        };
         var templates = [
-            '<div class="relativepopup"><div id="popup-container" class="popup-container" data-sm-init="true" data-state="success"><div class="popup-half-column"><div class="popup-subtitle"></div><div class="popup-title"></div><p class="popup-description"></p><div class="popup-form-block"><div class="popup-countdown"><div class="popup-countdown-box"><div class="popup-countdown-number popup-hours">01</div><p>Hours</p></div><div class="popup-countdown-box"><div class="popup-countdown-number popup-minutes">38</div><p>Minutes</p></div><div class="popup-countdown-box"><div class="popup-countdown-number popup-seconds">56</div><p>Seconds</p></div></div><form class="form popup-form"> <input type="text" class="popup-field field-50" maxlength="256" name="name" data-name="Name" placeholder="Name" id="name"> <input type="email" class="popup-field field-50" maxlength="256" name="email" data-name="email" placeholder="Email" id="email"> <input type="submit" value="" data-wait="Please wait..." class="popup-button1"></form><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div><div class="popup-half-column popup-image-full"><img class="popup-image" src="" alt=""></div></div></div>',
-            '<div class="relativepopup"><div id="popup-container" class="popup-container" data-sm-init="true" data-state="success"><div class="popup-half-column text-align-left"><div class="popup-subtitle"></div><div class="popup-title"></div><p class="popup-description"></p><div class="popup-form-block w-form"><form id="email-form" name="email-form" data-name="Email Form" class="form"> <input type="text" class="popup-field field-style-2 w-input" maxlength="256" name="name" data-name="Name" placeholder="Name" id="name"> <input type="text" class="popup-field field-style-2 w-input" maxlength="256" name="email" data-name="email" placeholder="Email" id="email"> <input type="submit" value="" data-wait="Please wait..." class="popup-main-button w-button popup-button1"></form><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div><div class="popup-half-column popup-image-full"><img class="popup-image" src="" alt=""></div></div></div>',
-            '<div class="relativepopup"><div id="popup-container" class="popup-container" data-sm-init="true" data-state="success"><div class="popup-half-column"><img src="./images/email-64.png" alt="" class="subtitle-image"><div class="popup-subtitle"></div><div class="popup-title"></div><p class="popup-description"></p><div class="popup-form-block w-form"><form id="email-form" name="email-form" data-name="Email Form" class="form"> <input type="text" class="popup-field field-style-2 w-input" maxlength="256" name="email" data-name="email" placeholder="Email" id="email"> <input type="submit" data-wait="Please wait..." class="popup-main-button w-button popup-button1"></form><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div></div></div>',
-            '<div class="relativepopup"><div id="popup-container" class="popup-container has-background-image" data-sm-init="true" data-state="success"><div class="popup-half-column"><div class="popup-subtitle custom-color"></div><div class="popup-title bigger-title custom-color lighter-headlines"></div><p class="popup-description popup-white-color-text"></p><div class="popup-form-block w-form"><form id="email-form" name="email-form" data-name="Email Form" class="form"> <input type="text" class="popup-field field-style-2 w-input" maxlength="256" name="email" data-name="email" placeholder="Email" id="email"> <input type="submit" value="Free laptop? I&#x27;m In!" data-wait="Please wait..." class="popup-main-button customize-color w-button popup-button1"></form><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div><div class="popup-half-column popup-image-full"><img class="popup-image" src="" alt=""></div></div></div>',
-            '<div class="relativepopup"><div id="popup-container" class="popup-container image-on-top" data-sm-init="true" data-state="success"><div class="popup-half-column"><div class="popup-subtitle"></div><div class="popup-title smaller-title"></div><p class="popup-description"></p> <a href="#" class="popup-main-button submit-style-2 w-button popup-button1"></a></div><div class="popup-half-column popup-image-full"> <img class="popup-image" src="" sizes="390px" alt=""></div></div><div class="overlay-popup"></div></div>',
-            '<div class="relativepopup"><div id="popup-container" class="popup-container" data-sm-init="true" data-state="success"><div class="popup-half-column multiple-products"><div class="popup-subtitle"></div><div class="popup-title"></div><p class="popup-description"></p><div class="popup-products"> <a href="#" class="popup-product w-inline-block"> <img src="./images/dress-example.jpg" sizes="134.546875px" alt="" class="popup-product-image"><div class="popup-product-info"><div class="popup-product-name lighter-headlines">Product name</div><div class="popup-product-price old-price">$28.80</div><div class="popup-product-price new-price">$19.90</div></div> </a> <a href="#" class="popup-product w-inline-block"> <img src="./images/dress-example.jpg" sizes="134.546875px" alt="" class="popup-product-image"><div class="popup-product-info"><div class="popup-product-name lighter-headlines">Product name</div><div class="popup-product-price old-price">$28.80</div><div class="popup-product-price new-price">$19.90</div></div> </a> <a href="#" class="popup-product w-inline-block"> <img src="./images/dress-example.jpg" sizes="134.546875px" alt="" class="popup-product-image"><div class="popup-product-info"><div class="popup-product-name lighter-headlines">Product name</div><div class="popup-product-price old-price">$28.80</div><div class="popup-product-price new-price">$19.90</div></div> </a></div></div></div><div class="overlay-popup"></div></div>',
-            '<div class="relativepopup"><div id="popup-container" class="popup-container" data-sm-init="true" data-state="success"><div class="popup-half-column single-product"><div class="popup-products"> <a href="#" class="popup-product w-inline-block"><img src="images/dress-example.jpg" sizes="134.546875px" alt="" class="popup-product-image"><div class="popup-product-info"><div class="popup-product-name">Product name</div><div class="popup-product-price old-price">$28.80</div><div class="popup-product-price new-price">$19.90</div></div> </a></div></div></div><div class="overlay-popup"></div></div>',
-            '<div class="relativepopup"><div class="popup-container" data-sm-init="true" data-state="success"><div class="popup-half-column"><div class="popup-subtitle"></div><div class="popup-title"></div><div class="popup-description"></div><div class="popup-countdown"><div class="popup-countdown-box"><div class="popup-countdown-number popup-hours">01</div><p>Hours</p></div><div class="popup-countdown-box"><div class="popup-countdown-number popup-minutes">38</div><p>Minutes</p></div><div class="popup-countdown-box"><div class="popup-countdown-number popup-seconds">56</div><p>Seconds</p></div></div><a href="#" class="popup-main-button submit-style-3 w-button popup-button1">Shop now</a></div><div class="popup-half-column popup-image-full"><img class="popup-image" src="" alt=""></div></div><div class="overlay-popup"></div></div>',
-            '<div class="relativepopup"><div id="popup-container" class="popup-container image-on-top font-lato" data-sm-init="true" data-state="success"><div class="popup-half-column"><div class="popup-title bigger-title"></div><p class="popup-description"></p><div class="popup-discount"><div class="popup-discount-code popup-subtitle"></div></div> <a href="#" class="popup-main-button submit-style-2 w-button popup-button1"></a></div><div class="popup-half-column"> <img class="popup-image" src="" sizes="342px" alt=""></div></div><div class="overlay-popup"></div></div>'
+            //[1]
+            `<div class="relativepopup"><div id="popup-container" class="popup-container" data-sm-init="true" data-state="success"><div class="popup-half-column"><div class="popup-subtitle"></div><div class="popup-title"></div><p class="popup-description"></p>${htmlTemplates.countdown}<div class="popup-form-block"><form class="form popup-form"> <input type="text" class="popup-field field-50" maxlength="256" name="name" data-name="Name" placeholder="Name" id="name"> <input type="email" class="popup-field field-50" maxlength="256" name="email" data-name="email" placeholder="Email" id="email"> <input type="submit" value="" data-wait="Please wait..." class="popup-button1"></form><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div><div class="popup-half-column popup-image-full"><img class="popup-image" src="" alt=""></div></div></div>`,
+            //[2]
+            `<div class="relativepopup"><div id="popup-container" class="popup-container" data-sm-init="true" data-state="success"><div class="popup-half-column text-align-left"><div class="popup-subtitle"></div><div class="popup-title"></div><p class="popup-description"></p>${htmlTemplates.countdown}<div class="popup-form-block w-form"><form id="email-form" name="email-form" data-name="Email Form" class="form"> <input type="text" class="popup-field field-style-2 w-input" maxlength="256" name="name" data-name="Name" placeholder="Name" id="name"> <input type="text" class="popup-field field-style-2 w-input" maxlength="256" name="email" data-name="email" placeholder="Email" id="email"> <input type="submit" value="" data-wait="Please wait..." class="popup-main-button w-button popup-button1"></form><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div><div class="popup-half-column popup-image-full"><img class="popup-image" src="" alt=""></div></div></div>`,
+            //[3]
+            `<div class="relativepopup"><div id="popup-container" class="popup-container" data-sm-init="true" data-state="success"><div class="popup-half-column"><img src="./images/email-64.png" alt="" class="subtitle-image"><div class="popup-subtitle"></div><div class="popup-title"></div><p class="popup-description"></p>${htmlTemplates.countdown}<div class="popup-form-block w-form"><form id="email-form" name="email-form" data-name="Email Form" class="form"> <input type="text" class="popup-field field-style-2 w-input" maxlength="256" name="email" data-name="email" placeholder="Email" id="email"> <input type="submit" data-wait="Please wait..." class="popup-main-button w-button popup-button1"></form><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div></div></div>`,
+            //[4]
+            `<div class="relativepopup"><div id="popup-container" class="popup-container has-background-image" data-sm-init="true" data-state="success"><div class="popup-half-column"><div class="popup-subtitle custom-color"></div><div class="popup-title bigger-title custom-color lighter-headlines"></div><p class="popup-description popup-white-color-text"></p>${htmlTemplates.countdown}<div class="popup-form-block w-form"><form id="email-form" name="email-form" data-name="Email Form" class="form"> <input type="text" class="popup-field field-style-2 w-input" maxlength="256" name="email" data-name="email" placeholder="Email" id="email"> <input type="submit" value="Free laptop? I&#x27;m In!" data-wait="Please wait..." class="popup-main-button customize-color w-button popup-button1"></form><div class="w-form-done"><div>Thank you! Your submission has been received!</div></div><div class="w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div></div></div><div class="popup-half-column popup-image-full"><img class="popup-image" src="" alt=""></div></div></div>`,
+            //[5]
+            `<div class="relativepopup"><div id="popup-container" class="popup-container image-on-top" data-sm-init="true" data-state="success"><div class="popup-half-column"><div class="popup-subtitle"></div><div class="popup-title smaller-title"></div><p class="popup-description"></p> ${htmlTemplates.countdown} ${htmlTemplates.emptyForm} <a href="#" class="popup-main-button submit-style-2 w-button popup-button1"></a></div><div class="popup-half-column popup-image-full"> <img class="popup-image" src="" sizes="390px" alt=""></div></div><div class="overlay-popup"></div></div>`,
+            //[6]
+            `<div class="relativepopup"><div id="popup-container" class="popup-container" data-sm-init="true" data-state="success"><div class="popup-half-column multiple-products"><div class="popup-subtitle"></div><div class="popup-title"></div><p class="popup-description"></p><div class="popup-products"> <a href="#" class="popup-product w-inline-block"> <img src="./images/dress-example.jpg" sizes="134.546875px" alt="" class="popup-product-image"><div class="popup-product-info"><div class="popup-product-name lighter-headlines">Product name</div><div class="popup-product-price old-price">$28.80</div><div class="popup-product-price new-price">$19.90</div></div> </a> <a href="#" class="popup-product w-inline-block"> <img src="./images/dress-example.jpg" sizes="134.546875px" alt="" class="popup-product-image"><div class="popup-product-info"><div class="popup-product-name lighter-headlines">Product name</div><div class="popup-product-price old-price">$28.80</div><div class="popup-product-price new-price">$19.90</div></div> </a> <a href="#" class="popup-product w-inline-block"> <img src="./images/dress-example.jpg" sizes="134.546875px" alt="" class="popup-product-image"><div class="popup-product-info"><div class="popup-product-name lighter-headlines">Product name</div><div class="popup-product-price old-price">$28.80</div><div class="popup-product-price new-price">$19.90</div></div> </a></div> ${htmlTemplates.countdown} ${htmlTemplates.emptyForm} </div></div><div class="overlay-popup"></div></div>`,
+            //[7]
+            `<div class="relativepopup"><div id="popup-container" class="popup-container" data-sm-init="true" data-state="success"><div class="popup-half-column single-product"><div class="popup-products"> <a href="#" class="popup-product w-inline-block"><img src="images/dress-example.jpg" sizes="134.546875px" alt="" class="popup-product-image"><div class="popup-product-info"><div class="popup-product-name">Product name</div><div class="popup-product-price old-price">$28.80</div><div class="popup-product-price new-price">$19.90</div></div> </a></div> ${htmlTemplates.countdown} ${htmlTemplates.emptyForm} </div></div><div class="overlay-popup"></div></div>`,
+            //[8]
+            `<div class="relativepopup"><div class="popup-container" data-sm-init="true" data-state="success"><div class="popup-half-column"><div class="popup-subtitle"></div><div class="popup-title"></div><div class="popup-description"></div>${htmlTemplates.countdown} ${htmlTemplates.emptyForm} <a href="#" class="popup-main-button submit-style-3 w-button popup-button1">Shop now</a></div><div class="popup-half-column popup-image-full"><img class="popup-image" src="" alt=""></div></div><div class="overlay-popup"></div></div>`,
+            //[9]
+            `<div class="relativepopup"><div id="popup-container" class="popup-container image-on-top font-lato" data-sm-init="true" data-state="success"><div class="popup-half-column"><div class="popup-title bigger-title"></div><p class="popup-description"></p><div class="popup-discount"><div class="popup-discount-code popup-subtitle"></div></div> ${htmlTemplates.countdown} ${htmlTemplates.emptyForm} <a href="#" class="popup-main-button submit-style-2 w-button popup-button1"></a></div><div class="popup-half-column"> <img class="popup-image" src="" sizes="342px" alt=""></div></div><div class="overlay-popup"></div></div>`
         ];
         if (kind == null || kind <= 0 || kind > templates.length ) {
             console.log('Invalid kind: ', kind);
@@ -530,6 +543,7 @@ function getAllUrlParams(url) {
             kind = kind -1;
         }
         var ALL_SETTINGS = [
+            //[0]
             {
                 "text" : {
                     "subtitle_text"         : "TIME LIMITED OFFER",
@@ -582,6 +596,7 @@ function getAllUrlParams(url) {
                     "popup_cancel_position" : "inside",
                 }
             },
+            //[1]
             {
                 "text" : {
                     "subtitle_text"         : "EXAMPLE OF TEXT",
@@ -634,6 +649,7 @@ function getAllUrlParams(url) {
                     "popup_cancel_position" : "inside",
                 }
             },
+            //[2]
             {
                 "text" : {
                     "subtitle_text"         : "",
@@ -686,6 +702,7 @@ function getAllUrlParams(url) {
                     "popup_cancel_position" : "inside",
                 }
             },
+            //[3]
             {
                 "text" : {
                     "subtitle_text"         : "DON'T MISS OUT",
@@ -738,6 +755,7 @@ function getAllUrlParams(url) {
                     "popup_cancel_position" : "inside",
                 }
             },
+            //[4]
             {
                 "text" : {
                     "subtitle_text"         : "CUSTOM SUBTITLE",
@@ -790,6 +808,7 @@ function getAllUrlParams(url) {
                     "popup_cancel_position" : "inside",
                 }
             },
+            //[5]
             {
                 "text" : {
                     "subtitle_text"         : "NEW ARRIVALS",
@@ -842,6 +861,7 @@ function getAllUrlParams(url) {
                     "popup_cancel_position" : "inside",
                 }
             },
+            //[6]
             {
                 "text" : {
                     "subtitle_text"         : "$19.90",
@@ -894,6 +914,7 @@ function getAllUrlParams(url) {
                     "popup_cancel_position" : "inside",
                 }
             },
+            //[7]
             {
                 "text" : {
                     "subtitle_text"         : "CHRISMAS SPECIAL",
@@ -904,7 +925,7 @@ function getAllUrlParams(url) {
                     "description_color"     : "",
                 },
                 "countdown" : {
-                    "attached"              : false,
+                    "attached"              : true,
                     "countdown_value"       : "",
                 },
                 "form" : {
@@ -946,6 +967,7 @@ function getAllUrlParams(url) {
                     "popup_cancel_position" : "inside",
                 }
             },
+            //[8]
             {
                 "text" : {
                     "subtitle_text"         : "SAVE25",

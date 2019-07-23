@@ -23,25 +23,47 @@ var applyFormSetting = function() {
     $("#button2-background").val(settings.buttons.button2_background);    
 }
 
+var applyCountdownSetting = function () {
+    console.log(settings.countdown);
+    if (settings.countdown.attached == true || settings.countdown.attached == "true") {
+        var date = new Date();
+        $("#countdown-value").attr('min', dateString(date));
+        if (settings.countdown.countdown_value == '') {
+            date.setDate(date.getDate() + 1);
+            settings.countdown.countdown_value = dateString(date);
+        }
+        $("#countdown-value").val(settings.countdown.countdown_value);
+        $("#countdown-value").change();
+
+        $(".popup-countdown").show();
+        // $("#countdown-switch").val(true);
+        // $("#countdown-switch").trigger('click');
+    } else {
+        $(".popup-countdown").hide();
+        // $("#countdown-switch").val(false);
+        // $("#countdown-switch").trigger('click');
+    }
+}
+
 var setSettings = function(){
     applyFormSetting();
+    applyCountdownSetting();
 
-    var date = new Date();
-    $("#countdown-value").attr('min', dateString(date));
-    if (settings.countdown.countdown_value == '') {
-        date.setDate(date.getDate() + 1);
-        settings.countdown.countdown_value = dateString(date);
-    }
-    $("#countdown-value").val(settings.countdown.countdown_value);
-    $("#countdown-value").change();
-
-    $("#countdown-value").val(settings.countdown.countdown_value);
     $("#form-url").val(settings.form.form_url);
     //$("input[name='form-width']:checked").val()
     $("#product1_url").val(settings.products.product1_url);
     $("#product2_url").val(settings.products.product2_url);
     $("#product3_url").val(settings.products.product3_url);
     $("#image-url").val(settings.image.image_url);
+    $checked = $("input[name='image-position']:checked");
+    if (settings.image.image_position !== undefined && settings.image.image_position !== '' && $checked.val() != settings.image.image_position) {
+        $checked.prop('checked', false);
+        var $radios = $('input:radio[name=image-position]');
+        // if($radios.is(':checked') !== false) {
+
+        // }
+        $radios.filter(`[value=${settings.image.image_position}]`).prop('checked', true);
+    }
     //$("input[name='image-position']:checked").val()
     $("#popup-type").val(settings.animations.popup_type);
     $("#popup-delay").val(settings.animations.popup_delay);
@@ -66,9 +88,7 @@ var getSettings = function(){
             "description_text"      : $("#description-text").val(),
             "description_color"     : $("#description-color").val()
         },
-        "countdown" : {
-            "countdown_value"       : $("#countdown-value").val()
-        },
+        "countdown" : settings.countdown,
         "form" : {
             "form_url"              : $("#form-url").val(),
             "form_width"            : $("input[name='form-width']:checked").val()
@@ -170,12 +190,24 @@ var generateCode = function (selector, callback) {
     setSettings();
     populateSettings();
 
+    //slice toggle-off components
+    if (selector != '') {
+        if (settings.countdown.attached != true && settings.countdown.attached != "true") {
+            $('div.test .popup-countdown').remove();
+        }
+    }
+
     convertImagesToBase64(selector, function () {
         html = "$('" + $('div.test').html().replace(/>[\n\t ]+</g, "><").replace(/'/g, '&#39;') + "').appendTo('div.regularsection');";
         $('div.test').html('');
 
         var runScript = "$('.popup-container').SlickModals({ popup_type: '" + settings.animations.popup_type + "', popup_animation: '" + settings.animations.popup_animation + "', popup_position: '" + settings.animations.popup_position + "', popup_closeButtonPlace: '" + settings.advanced.popup_cancel_position + "', popup_css: '" + settings.advanced.popup_class + "', overlay_isVisible: false,});";
         runScript = "var params = " + JSON.stringify(params) + "; $('.popup-container').SlickModals(params);";
+        if (settings.countdown.attached == true || settings.countdown.attached == "true") {
+            //inject count-down script
+            // runScript = runScript + `var _0x6cc0=["\x30","\x67\x65\x74\x54\x69\x6D\x65","\x76\x61\x6C","\x23\x63\x6F\x75\x6E\x74\x64\x6F\x77\x6E\x2D\x76\x61\x6C\x75\x65","\x20\x30\x30\x3A\x30\x30\x3A\x30\x30","\x66\x6C\x6F\x6F\x72","\x68\x74\x6D\x6C","\x2E\x70\x6F\x70\x75\x70\x2D\x68\x6F\x75\x72\x73","\x2E\x70\x6F\x70\x75\x70\x2D\x6D\x69\x6E\x75\x74\x65\x73","\x2E\x70\x6F\x70\x75\x70\x2D\x73\x65\x63\x6F\x6E\x64\x73","\x69\x6E\x6E\x65\x72\x48\x54\x4D\x4C","\x64\x65\x6D\x6F","\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x42\x79\x49\x64","\x45\x58\x50\x49\x52\x45\x44"];function formatting(_0x3316x2){return _0x3316x2< 10?_0x6cc0[0]+ _0x3316x2:_0x3316x2}clearInterval($count_down_timer_x);var countDownDate= new Date($(_0x6cc0[3])[_0x6cc0[2]]()+ _0x6cc0[4])[_0x6cc0[1]]();$count_down_timer_x= setInterval(function(){var _0x3316x4= new Date()[_0x6cc0[1]]();var _0x3316x5=countDownDate- _0x3316x4;var _0x3316x6=Math[_0x6cc0[5]](_0x3316x5/ (1000* 60* 60* 24));var _0x3316x7=Math[_0x6cc0[5]]((_0x3316x5% (1000* 60* 60* 24))/ (1000* 60* 60));var _0x3316x8=Math[_0x6cc0[5]]((_0x3316x5% (1000* 60* 60))/ (1000* 60));var _0x3316x9=Math[_0x6cc0[5]]((_0x3316x5% (1000* 60))/ 1000);var _0x3316xa=_0x3316x7+ _0x3316x6* 24;if(_0x3316xa> 100){_0x3316xa= 99;_0x3316x8= 59;_0x3316x9= 59};$(_0x6cc0[7])[_0x6cc0[6]](formatting(_0x3316xa));$(_0x6cc0[8])[_0x6cc0[6]](formatting(_0x3316x8));$(_0x6cc0[9])[_0x6cc0[6]](formatting(_0x3316x9));if(_0x3316x5< 0){clearInterval($count_down_timer_x);document[_0x6cc0[12]](_0x6cc0[11])[_0x6cc0[10]]= _0x6cc0[13]}},1000)`;
+            runScript = runScript + `function formatting(target){return target<10?'0'+target:target;} var count_down_timer_x = clearInterval(count_down_timer_x);var countDownDate=new Date('${settings.countdown.countdown_value} 00:00:00').getTime();count_down_timer_x=setInterval(function(){var now=new Date().getTime();var distance=countDownDate-now;var days=Math.floor(distance/(1000*60*60*24));var hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));var minutes=Math.floor((distance%(1000*60*60))/(1000*60));var seconds=Math.floor((distance%(1000*60))/1000);var hh=hours+days*24;if(hh>100){hh=99;minutes=59;seconds=59;} $(".popup-hours").html(formatting(hh));$(".popup-minutes").html(formatting(minutes));$(".popup-seconds").html(formatting(seconds));if(distance<0){clearInterval(count_down_timer_x);document.getElementById("demo").innerHTML="EXPIRED";}},1000);`;
+        }
         // runScript = '$.getScript("https://cdn.twik.io/generator/js/jquery.slickmodal.min.js", function () {' + runScript + '});';
 
         callback(cssScript + html + runScript);
@@ -218,6 +250,7 @@ var convertImgToBase64 = function (img, callback) {
         try {
             dataURL = canvas.toDataURL(outputFormat);
         }catch(e) {
+            dataURL = this.src;
             console.log(e);
         }
         callback (dataURL);
@@ -486,36 +519,44 @@ $("input").on('change', function(){
                 $('.sm-popup').width('780px');
             }
             break;
+        case 'countdown-switch':
+            console.log($(this).val());
+            settings.countdown.attached = $(this).val();
+            applyCountdownSetting();
+            break;
         case 'countdown-value':
             clearInterval(x);
-            var countDownDate = new Date($(this).val()+ ' 00:00:00').getTime();
-            x = setInterval(function() {
-                // Get today's date and time
-                var now = new Date().getTime();
+            if ($(this).val()) {
+                settings.countdown.countdown_value = $(this).val();
+                var countDownDate = new Date($(this).val()+ ' 00:00:00').getTime();
+                x = setInterval(function() {
+                    // Get today's date and time
+                    var now = new Date().getTime();
 
-                // Find the distance between now and the count down date
-                var distance = countDownDate - now;
+                    // Find the distance between now and the count down date
+                    var distance = countDownDate - now;
 
-                // Time calculations for days, hours, minutes and seconds
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                var hh = hours + days * 24;
-                if (hh > 100) {
-                    hh = 99;
-                    minutes = 59;
-                    seconds = 59;
-                }
-                $(".popup-hours").html(hh);
-                $(".popup-minutes").html(formatting(minutes));
-                $(".popup-seconds").html(formatting(seconds));
-                // If the count down is finished, write some text 
-                if (distance < 0) {
-                    clearInterval(x);
-                    document.getElementById("demo").innerHTML = "EXPIRED";
-                }
-            }, 1000);
+                    // Time calculations for days, hours, minutes and seconds
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    var hh = hours + days * 24;
+                    if (hh > 100) {
+                        hh = 99;
+                        minutes = 59;
+                        seconds = 59;
+                    }
+                    $(".popup-hours").html(formatting(hh));
+                    $(".popup-minutes").html(formatting(minutes));
+                    $(".popup-seconds").html(formatting(seconds));
+                    // If the count down is finished, write some text 
+                    if (distance < 0) {
+                        clearInterval(x);
+                        $('#demo').html("EXPIRED");
+                    }
+                }, 1000);
+            }
             break;
         case 'form-width':
             if($(this).val() == '50'){
