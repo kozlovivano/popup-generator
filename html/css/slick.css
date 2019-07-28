@@ -20,7 +20,7 @@
 .sm-wrapper,
 .sm-wrapper .sm-overlay,
 .sm-wrapper .sm-popup {
-	position: absolute;
+	position: fixed;
 	top: 40%;
 	left: 10%;
 }
